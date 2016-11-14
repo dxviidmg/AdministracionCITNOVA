@@ -1,0 +1,7 @@
+{{programa.pk}}
+<form action="." method="post">
+	<h3>Nuevo partida</h3>
+		{%csrf_token%}
+		{{partidaForm.as_p}}
+	<input type="submit" value="Crear servicio">
+</form>
