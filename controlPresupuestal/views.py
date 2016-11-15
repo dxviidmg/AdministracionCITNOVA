@@ -196,3 +196,26 @@ class CreateListViewPartida(View):
 			nuevaPartida.save()
 		return redirect("controlPresupuestal:DetailViewProgramas", pk=pk)
 
+class UpdateListViewPartida(View):
+	def get(self, request, pk):
+		template_name="controlPresupuestal/updatePartida.html"
+		partida = get_object_or_404(Partida, pk=pk) 
+		partidaEditForm = PartidaEditForm(instance=partida)
+
+		context = {
+			'partida': partida,
+			'partidaEditForm': partidaEditForm,
+		}
+		return render(request,template_name,context)
+	def post(self, request, pk):
+		partida = get_object_or_404(Partida, pk=pk)
+		template_name = "controlPresupuestal/updatePartida.html"
+		partidaEditForm = PartidaEditForm(instance=partida, data=request.POST)
+
+		context = {
+			'partidaEditForm': partidaEditForm,
+		}
+
+		if partidaEditForm.is_valid:
+			partidaEditForm.save()
+		return redirect("controlPresupuestal:DetailViewProgramas", pk=partida.programa.pk)
