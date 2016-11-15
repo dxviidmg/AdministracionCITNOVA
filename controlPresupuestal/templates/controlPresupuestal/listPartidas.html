@@ -12,49 +12,174 @@ th, td {
 <a href="{%url 'controlPresupuestal:CreateListViewPartida' programa.pk%}">Crear partida</a>
 <table>
 	<thead>
-		<th><p align="center">Codigo</p></th>
 		<th><p align="center">Capitulo</p></th>
+		<th><p align="center">Codigo</p></th>
 		<th><p align="center">Descripción</p></th>
-		<th><p align="center">Enero</p></th>
-		<th><p align="center">Febrero</p></th>
-		<th><p align="center">Marzo</p></th>
-		<th><p align="center">Abril</p></th>
-		<th><p align="center">Mayo</p></th>
-		<th><p align="center">Junio</p></th>
-		<th><p align="center">Julio</p></th>
-		<th><p align="center">Agosto</p></th>
-		<th><p align="center">Septiembre</p></th>
-		<th><p align="center">Octubre</p></th>
-		<th><p align="center">Noviembre</p></th>
-		<th><p align="center">Diciembre</p></th>
-		<th><p align="center">Total</p></th>
+		<th colspan="6"><p align="center">Enero</p></th>
+		<th colspan="3"><p align="center">Febrero</p></th>
+		<th colspan="3"><p align="center">Marzo</p></th>
+		<th colspan="3"><p align="center">Abril</p></th>
+		<th colspan="3"><p align="center">Mayo</p></th>
+		<th colspan="3"><p align="center">Junio</p></th>
+		<th colspan="3"><p align="center">Julio</p></th>
+		<th colspan="3"><p align="center">Agosto</p></th>
+		<th colspan="3"><p align="center">Septiembre</p></th>
+		<th colspan="3"><p align="center">Octubre</p></th>
+		<th colspan="3"><p align="center">Noviembre</p></th>
+		<th colspan="3"><p align="center">Diciembre</p></th>
+		<th colspan="3"><p align="center">Total</p></th>
 	</thead>
+	<tr>
+		<td colspan="3"></td>
+		<td><p>Autorizado</p></td>
+		<td><p>Ampliación</p></td>
+		<td><p>Reducción</p></td>
+		<td><p>Modificado</p></td>
+		<td><p>Ejercido</p></td>
+		<td><p>Por ejercer</p></td>
+
+		<td><p>Autorizado</p></td>
+		<td><p>Ampliación</p></td>
+		<td><p>Reducción</p></td>
+		<td><p>Autorizado</p></td>
+		<td><p>Ampliación</p></td>
+		<td><p>Reducción</p></td>
+		<td><p>Autorizado</p></td>
+		<td><p>Ampliación</p></td>
+		<td><p>Reducción</p></td>
+		<td><p>Autorizado</p></td>
+		<td><p>Ampliación</p></td>
+		<td><p>Reducción</p></td>
+		<td><p>Autorizado</p></td>
+		<td><p>Ampliación</p></td>
+		<td><p>Reducción</p></td>
+		<td><p>Autorizado</p></td>
+		<td><p>Ampliación</p></td>
+		<td><p>Reducción</p></td>
+		<td><p>Autorizado</p></td>
+		<td><p>Ampliación</p></td>
+		<td><p>Reducción</p></td>
+		<td><p>Autorizado</p></td>
+		<td><p>Ampliación</p></td>
+		<td><p>Reducción</p></td>
+		<td><p>Autorizado</p></td>
+		<td><p>Ampliación</p></td>
+		<td><p>Reducción</p></td>
+		<td><p>Autorizado</p></td>
+		<td><p>Ampliación</p></td>
+		<td><p>Reducción</p></td>
+		<td><p>Autorizado</p></td>
+		<td><p>Ampliación</p></td>
+		<td><p>Reducción</p></td>
+	</tr>
 {%for partida in partidas%}
 
 	<tr>
-		<td>{{partida.codigo}}</td>
 		<td>{{partida.capitulo}}</td>
+		<td>{{partida.codigo}}</td>
 		<td>{{partida.descripcion}}</td>
+
 		<td>{{partida.monto_enero_autorizado}}</td>
+		<td>{{partida.monto_enero_ampliacion}}</td>
+		<td>{{partida.monto_enero_reduccion}}</td>
+		<td></td>
+		<td>{{partida.monto_enero_ejercido}}</td>
+		<td></td>
 		<td>{{partida.monto_febrero_autorizado}}</td>
+		<td>{{partida.monto_febrero_ampliacion}}</td>
+		<td>{{partida.monto_febrero_reduccion}}</td>
+		
 		<td>{{partida.monto_marzo_autorizado}}</td>
+		<td>{{partida.monto_enero_ampliacion}}</td>
+		<td>{{partida.monto_enero_reduccion}}</td>
+		
 		<td>{{partida.monto_abril_autorizado}}</td>
+		<td>{{partida.monto_abril_ampliacion}}</td>
+		<td>{{partida.monto_abril_reduccion}}</td>
+
 		<td>{{partida.monto_mayo_autorizado}}</td>
+		<td>{{partida.monto_mayo_ampliacion}}</td>
+		<td>{{partida.monto_mayo_reduccion}}</td>		
+		
 		<td>{{partida.monto_junio_autorizado}}</td>
+		<td>{{partida.monto_junio_ampliacion}}</td>
+		<td>{{partida.monto_junio_reduccion}}</td>
+
 		<td>{{partida.monto_julio_autorizado}}</td>
+		<td>{{partida.monto_julio_ampliacion}}</td>
+		<td>{{partida.monto_julio_reduccion}}</td>
+
 		<td>{{partida.monto_agosto_autorizado}}</td>
+		<td>{{partida.monto_agosto_ampliacion}}</td>
+		<td>{{partida.monto_agosto_reduccion}}</td>
+
 		<td>{{partida.monto_septiembre_autorizado}}</td>
+		<td>{{partida.monto_septiembre_ampliacion}}</td>
+		<td>{{partida.monto_septiembre_reduccion}}</td>	
+
 		<td>{{partida.monto_octubre_autorizado}}</td>
+		<td>{{partida.monto_octubre_ampliacion}}</td>
+		<td>{{partida.monto_octubre_reduccion}}</td>
+
 		<td>{{partida.monto_noviembre_autorizado}}</td>
+		<td>{{partida.monto_noviembre_ampliacion}}</td>
+		<td>{{partida.monto_noviembre_reduccion}}</td>
+
 		<td>{{partida.monto_diciembre_autorizado}}</td>
+		<td>{{partida.monto_diciembre_ampliacion}}</td>
+		<td>{{partida.monto_diciembre_reduccion}}</td>
+
 		<td>{{partida.monto_anual_autorizado}}</td>
 	</tr>
 {%empty%}
 
-		<tr>
 		<td colspan="14"><p>Lista de programas vacia</p></td>
 		</tr>
-			</table>
+
 {%endfor%}
+		<tr>
+		<td colspan="3"></td>
+		<td>{{suma_enero_autorizado}}</td>
+		<td>{{suma_enero_ampliacion}}</td>
+		<td>{{suma_enero_reduccion}}</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>{{suma_febrero_autorizado}}</td>
+		<td>{{suma_febrero_ampliacion}}</td>
+		<td>{{suma_febrero_reduccion}}</td>
+		<td>{{suma_marzo_autorizado}}</td>
+		<td>{{suma_marzo_ampliacion}}</td>
+		<td>{{suma_marzo_reduccion}}</td>
+		<td>{{suma_abril_autorizado}}</td>
+		<td>{{suma_abril_ampliacion}}</td>
+		<td>{{suma_abril_reduccion}}</td>
+		<td>{{suma_mayo_autorizado}}</td>
+		<td>{{suma_mayo_ampliacion}}</td>
+		<td>{{suma_mayo_reduccion}}</td>
+		<td>{{suma_junio_autorizado}}</td>
+		<td>{{suma_junio_ampliacion}}</td>
+		<td>{{suma_junio_reduccion}}</td>
+		<td>{{suma_julio_autorizado}}</td>
+		<td>{{suma_julio_ampliacion}}</td>
+		<td>{{suma_julio_reduccion}}</td>
+		<td>{{suma_agosto_autorizado}}</td>
+		<td>{{suma_agosto_ampliacion}}</td>
+		<td>{{suma_agosto_reduccion}}</td>
+		<td>{{suma_septiembre_autorizado}}</td>
+		<td>{{suma_septiembre_ampliacion}}</td>
+		<td>{{suma_septiembre_reduccion}}</td>
+		<td>{{suma_octubre_autorizado}}</td>
+		<td>{{suma_octubre_ampliacion}}</td>
+		<td>{{suma_octubre_reduccion}}</td>
+		<td>{{suma_noviembre_autorizado}}</td>
+		<td>{{suma_noviembre_ampliacion}}</td>
+		<td>{{suma_noviembre_reduccion}}</td>
+		<td>{{suma_diciembre_autorizado}}</td>
+		<td>{{suma_diciembre_ampliacion}}</td>
+		<td>{{suma_diciembre_reduccion}}</td>
+		<td>{{suma_anual}}</td>
 
+		<tr>
 
+	</table>

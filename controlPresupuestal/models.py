@@ -35,19 +35,55 @@ class Partida(models.Model):
 	codigo = models.IntegerField()
 	descripcion = models.TextField()	
 	monto_anual_autorizado = models.DecimalField(max_digits=20,decimal_places=2)
-	monto_enero_autorizado = models.DecimalField(max_digits=20,decimal_places=2) 
-	monto_febrero_autorizado = models.DecimalField(max_digits=20,decimal_places=2) 
-	monto_marzo_autorizado = models.DecimalField(max_digits=20,decimal_places=2) 
-	monto_abril_autorizado = models.DecimalField(max_digits=20,decimal_places=2) 
-	monto_mayo_autorizado = models.DecimalField(max_digits=20,decimal_places=2) 
-	monto_junio_autorizado = models.DecimalField(max_digits=20,decimal_places=2)
-	monto_julio_autorizado = models.DecimalField(max_digits=20,decimal_places=2) 
-	monto_agosto_autorizado = models.DecimalField(max_digits=20,decimal_places=2) 
-	monto_septiembre_autorizado = models.DecimalField(max_digits=20,decimal_places=2) 
-	monto_octubre_autorizado = models.DecimalField(max_digits=20,decimal_places=2) 
-	monto_noviembre_autorizado = models.DecimalField(max_digits=20,decimal_places=2) 
-	monto_diciembre_autorizado = models.DecimalField(max_digits=20,decimal_places=2) 
 
+	monto_enero_autorizado = models.DecimalField(max_digits=20,decimal_places=2)
+	monto_enero_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+	monto_enero_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0) 
+	monto_enero_ejercido = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+
+	monto_febrero_autorizado = models.DecimalField(max_digits=20,decimal_places=2) 
+	monto_febrero_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+	monto_febrero_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+	
+	monto_marzo_autorizado = models.DecimalField(max_digits=20,decimal_places=2)
+	monto_marzo_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+	monto_marzo_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+	
+	monto_abril_autorizado = models.DecimalField(max_digits=20,decimal_places=2)
+	monto_abril_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+	monto_abril_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0) 
+	
+	monto_mayo_autorizado = models.DecimalField(max_digits=20,decimal_places=2) 
+	monto_mayo_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+	monto_mayo_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+
+	monto_junio_autorizado = models.DecimalField(max_digits=20,decimal_places=2)
+	monto_junio_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+	monto_junio_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+
+	monto_julio_autorizado = models.DecimalField(max_digits=20,decimal_places=2) 
+	monto_julio_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+	monto_julio_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+
+	monto_agosto_autorizado = models.DecimalField(max_digits=20,decimal_places=2) 
+	monto_agosto_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+	monto_agosto_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+
+	monto_septiembre_autorizado = models.DecimalField(max_digits=20,decimal_places=2) 
+	monto_septiembre_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+	monto_septiembre_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+
+	monto_octubre_autorizado = models.DecimalField(max_digits=20,decimal_places=2) 
+	monto_octubre_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+	monto_octubre_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+
+	monto_noviembre_autorizado = models.DecimalField(max_digits=20,decimal_places=2) 
+	monto_noviembre_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+	monto_noviembre_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+
+	monto_diciembre_autorizado = models.DecimalField(max_digits=20,decimal_places=2) 
+	monto_diciembre_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+	monto_diciembre_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
 	def __str__(self):
 		return '{} {}'.format(self.codigo, self.descripcion)
 
