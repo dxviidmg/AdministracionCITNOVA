@@ -1,0 +1,47 @@
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;    
+}
+</style>
+<h1>Lista de partidas</h1>
+
+<p>Programa: {{programa.nombre}}</p>
+
+<table>
+	<thead>
+		<th><p align="center">Capitulo</p></th>
+		<th><p align="center">Codigo</p></th>
+		<th><p align="center">Descripcion</p></th>
+		<th><p align="center">Monto anual autorizado</p></th>
+		<th><p align="center">Acciones</p></th>
+	</thead>
+{%for partida in partidas%}
+	<tr>
+		<td>
+			{%if partida.capitulo == 1000%}
+				1000 - Servicios personales
+				{%elif partida.capitulo == 2000%}
+				2000 - Materiales y suministros
+				{%elif partida.capitulo == 3000%}
+				3000 - Servicios generales
+				{%elif partida.capitulo == 4000%}
+				4000 - Transferencias, asignaciones, subsidios y otras ayudas
+				{%elif partida.capitulo == 5000%}
+			{%endif%}
+		</td>
+		<td>{{partida.codigo}}</td>
+		<td>{{partida.descripcion}}</td>
+		<td>{{partida.monto_anual_autorizado}}</td>
+		<td><a href="{%url 'controlPresupuestal:ListViewMeses' partida.pk%}">Ver detalle</a></td>
+	</tr>
+{%empty%}
+	<tr>
+		<td colspan="12"><p align="center">Lista de partidas vacia</p></td>
+	</tr>
+</table>
+{%endfor%}

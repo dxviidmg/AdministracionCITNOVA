@@ -1,0 +1,48 @@
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;    
+}
+</style>
+<h1>Lista de programas</h1>
+
+<table>
+	<thead>
+		<th><p align="center">Nombre</p></th>
+		<th><p align="center">Objetivo</p></th>
+		<th><p align="center">Actividad</p></th>
+		<th><p align="center">Meta</p></th>
+		<th><p align="center">Unidad de medida</p></th>
+		<th><p align="center">Fuente de financiamiento</p></th>
+		<th><p align="center">Beneficiados</p></th>
+		<th><p align="center">Oficio de autorización</p></th>
+		<th><p align="center">Año</p></th>
+		<th><p align="center">Creación</p></th>
+		<th><p align="center">Monto</p></th>
+		<th><p align="center">Acciones</p></th>
+	</thead>
+{%for programa in programas%}
+	<tr>
+		<td>{{programa.nombre}}</td>
+		<td>{{programa.objetivo}}</td>
+		<td>{{programa.actividad}}</td>
+		<td>{{programa.meta}}</td>
+		<td>{{programa.unidad_de_medida}}</td>
+		<td>{{programa.fuente_de_financiamiento}}</td>
+		<td>{{programa.beneficiarios}}</td>
+		<td>{{programa.oficio_de_autorizacion}}</td>
+		<td>{{programa.año}}</td>
+		<td>{{programa.fecha_creado}}</td>
+		<td>{{programa.monto}}</td>
+		<td><a href="{%url 'controlPresupuestal:ListViewPartidas' programa.pk%}">Ver partidas</a></td>
+	</tr>
+{%empty%}
+	<tr>
+		<td colspan="12"><p align="center">Lista de programas vacia</p></td>
+	</tr>
+</table>
+{%endfor%}
