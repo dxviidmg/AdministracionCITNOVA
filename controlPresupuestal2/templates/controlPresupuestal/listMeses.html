@@ -19,7 +19,7 @@ th, td {
 <table>
 	<thead>
 		<th><p align="center">Mes</p></th>
-		<th><p align="center">Monto autorizado</p></th>
+		<th><p align="center">Autorizado</p></th>
 		<th><p align="center">Aumento</p></th>
 		<th><p align="center">Reduccion</p></th>
 		<th><p align="center">Modificado</p></th>
@@ -58,9 +58,9 @@ th, td {
 		<td>{{mes.monto_autorizado}}</td>
 		<td>{{mes.monto_ampliacion}}</td>
 		<td>{{mes.monto_reduccion}}</td>
-		<td></td>
+		<td>{%if mes.Modificado is NONE%}{{mes.monto_modificado}}{%endif%}</td>
 		<td>{{mes.monto_ejercido}}</td>
-		<td></td>
+		<td>{%if mes.MontoPorEjercer is NONE%}{{mes.monto_por_ejercer}}{%endif%}</td>
 	</tr>
 {%empty%}
 	<tr>
@@ -72,7 +72,8 @@ th, td {
 		<td>{{total_monto_autorizado}}</td>
 		<td>{{total_monto_ampliacion}}</td>
 		<td>{{total_monto_reduccion}}</td>
-		<td></td>
+		<td>{{total_monto_modificado}}</td>
 		<td>{{total_monto_ejercido}}</td>
+		<td>{{total_monto_por_ejercer}}</td>
 	</tr>
 </table>

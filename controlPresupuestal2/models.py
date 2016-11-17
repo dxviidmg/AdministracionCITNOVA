@@ -19,6 +19,7 @@ class Programa(models.Model):
 	año = models.IntegerField()
 	fecha_creado = models.DateTimeField(default=timezone.now)
 	monto = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+
 	def __str__(self):
 		return self.nombre
 
@@ -34,11 +35,11 @@ class Partida(models.Model):
 	codigo = models.IntegerField()
 	descripcion = models.TextField()	
 	monto_anual_autorizado = models.DecimalField(max_digits=20,decimal_places=2)
+
 	def __str__(self):
 		return '{} {}'.format(self.codigo, self.descripcion)
 
-class Mes(models.Model):
-	
+class Mes(models.Model):	
 	Mes_CHOICES = (
 		(1 , 'Enero'),
 		(2 , 'Febrero'),
@@ -53,12 +54,25 @@ class Mes(models.Model):
 		(11 , 'Noviembre'),
 		(12 , 'Diciembre'),
 	)
-
 	partida = models.ForeignKey(Partida)
 	mes = models.IntegerField(choices=Mes_CHOICES)
 	monto_autorizado = models.DecimalField(max_digits=20,decimal_places=2)
 	monto_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
 	monto_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
 	monto_ejercido = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+	monto_modificado = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+	monto_por_ejercer = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+	
+	def MontoModificado(self):
+		self.monto_modificado = self.monto_autorizado + self.monto_ampliacion - self.monto_reduccion
+		self.save()
+
+	def MontoPorEjercer(self):
+		self.monto_por_ejercer = self.monto_modificado - self.monto_ejercido
+		self.save()
+
 	def __str__(self):
 		return '{} {}'.format(self.partida, self.mes)
+
+##		self.published_date = timezone.now()
+#		self.save()
