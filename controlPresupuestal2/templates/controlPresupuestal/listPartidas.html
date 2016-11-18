@@ -10,11 +10,10 @@ th, td {
 </style>
 <h1>Lista de partidas</h1>
 
-<p>Programa: {{programa.nombre}}</p>
+<p>Capitulo: {{capitulo.nombre}}</p>
 
 <table>
 	<thead>
-		<th><p align="center">Capitulo</p></th>
 		<th><p align="center">Codigo</p></th>
 		<th><p align="center">Descripcion</p></th>
 		<th><p align="center">Monto anual autorizado</p></th>
@@ -22,18 +21,6 @@ th, td {
 	</thead>
 {%for partida in partidas%}
 	<tr>
-		<td>
-			{%if partida.capitulo == 1000%}
-				1000 - Servicios personales
-				{%elif partida.capitulo == 2000%}
-				2000 - Materiales y suministros
-				{%elif partida.capitulo == 3000%}
-				3000 - Servicios generales
-				{%elif partida.capitulo == 4000%}
-				4000 - Transferencias, asignaciones, subsidios y otras ayudas
-				{%elif partida.capitulo == 5000%}
-			{%endif%}
-		</td>
 		<td>{{partida.codigo}}</td>
 		<td>{{partida.descripcion}}</td>
 		<td>{{partida.monto_anual_autorizado}}</td>
@@ -43,6 +30,14 @@ th, td {
 	<tr>
 		<td colspan="12"><p align="center">Lista de partidas vacia</p></td>
 	</tr>
+
+{%endfor%}
 </table>
+
+{%for mes in meses%}
+{{mes.monto_autorizado}}
+{%empty%}
+Vacio
 {%endfor%}
 
+{{suma_monto_autorizado_meses_por_partida}}

@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 from .models import *
+#from querysetjoin import QuerySetJoin
 
 class ListViewProgramas(View):
 	def get(self, request):
@@ -13,17 +14,42 @@ class ListViewProgramas(View):
 		}
 		return render(request, template_name, context)
 
+class ListViewCapitulos(View):
+	def get(self, request, pk):
+		template_name = "controlPresupuestal/listCapitulos.html"
+		programa = get_object_or_404(Programa, pk=pk)
+		capitulos = Capitulo.objects.filter(programa=programa)
+
+		context = {
+		'programa': programa,
+		'capitulos': capitulos,
+		}
+		return render(request, template_name, context)
+
 class ListViewPartidas(View):
 	def get(self, request, pk):
 		template_name = "controlPresupuestal/listPartidas.html"
 
-		programa = get_object_or_404(Programa, pk=pk)
-		partidas = Partida.objects.filter(programa=programa).order_by('codigo')
-		meses = Mes.objects.filter(partida=partidas)
+		capitulo = get_object_or_404(Capitulo, pk=pk)
+		partidas = Partida.objects.filter(capitulo=capitulo).order_by('codigo')
+		mesesdeunapartida = Mes.objects.filter(partida__in=partidas)
 
+		suma_monto_autorizado_meses_por_partida = 0
+		for mesdeunapartida in mesesdeunapartida:
+			#suma_monto_autorizado_meses_por_partida = suma_monto_autorizado_meses_por_partida + mesesdeunapartida.monto_autorizado
+			suma_monto_autorizado_meses_por_partida = suma_monto_autorizado_meses_por_partida + mesdeunapartida.monto_autorizado
+
+		print(partidas)
+		print(mesesdeunapartida)
+
+		print(suma_monto_autorizado_meses_por_partida)
+		#print(suma_monto_autorizado_meses_por_partida)
+		
 		context = {
-		'programa': programa,
+		'capitulo': capitulo,
 		'partidas': partidas,
+		'meses': mesesdeunapartida,
+		'suma_monto_autorizado_meses_por_partida': suma_monto_autorizado_meses_por_partida,
 		}
 		return render(request, template_name, context)
 
@@ -42,7 +68,7 @@ class ListViewMeses(View):
 		total_monto_modificado = 0
 		total_monto_por_ejercer = 0
 		for mes in meses:
-			monto_modificado = mes.monto_autorizado + mes.monto_ampliacion - mes.monto_reduccion 
+			#monto_modificado = mes.monto_autorizado + mes.monto_ampliacion - mes.monto_reduccion 
 			total_monto_autorizado = total_monto_autorizado + mes.monto_autorizado
 			total_monto_ampliacion = total_monto_ampliacion + mes.monto_ampliacion
 			total_monto_reduccion = total_monto_reduccion + mes.monto_reduccion

@@ -23,15 +23,16 @@ class Programa(models.Model):
 	def __str__(self):
 		return self.nombre
 
-class Partida(models.Model):
-	Capitulo_CHOICES = (
-		(1000 , '1000 - Servicios personales'),
-		(2000 , '2000 - Materiales y suministros'),
-		(3000 , '3000 - Servicios generales'),
-		(4000 , '4000 - Transferencias, asignaciones, subsidios y otras ayudas'),
-	)
+class Capitulo(models.Model):
 	programa = models.ForeignKey(Programa)
-	capitulo = models.IntegerField(null=True, blank=True, choices=Capitulo_CHOICES)
+	codigo = models.CharField(max_length=4)
+	nombre = models.CharField(max_length=50)
+
+	def __str__(self):
+		return '{} {}'.format(self.codigo, self.nombre)
+
+class Partida(models.Model):
+	capitulo = models.ForeignKey(Capitulo)
 	codigo = models.IntegerField()
 	descripcion = models.TextField()	
 	monto_anual_autorizado = models.DecimalField(max_digits=20,decimal_places=2)
