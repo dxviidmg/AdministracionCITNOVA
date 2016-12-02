@@ -35,7 +35,7 @@ class Partida(models.Model):
 	capitulo = models.ForeignKey(Capitulo)
 	codigo = models.IntegerField()
 	descripcion = models.TextField()	
-	monto_anual_autorizado = models.DecimalField(max_digits=20,decimal_places=2)
+	monto_anual_autorizado = models.DecimalField(max_digits=20,decimal_places=2, default=0)
 
 	def __str__(self):
 		return '{} {}'.format(self.codigo, self.descripcion)
@@ -60,8 +60,8 @@ class Mes(models.Model):
 	monto_autorizado = models.DecimalField(max_digits=20,decimal_places=2)
 	monto_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
 	monto_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0)
-	monto_ejercido = models.DecimalField(max_digits=20,decimal_places=2, default=0)
 	monto_modificado = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+	monto_ejercido = models.DecimalField(max_digits=20,decimal_places=2, default=0)
 	monto_por_ejercer = models.DecimalField(max_digits=20,decimal_places=2, default=0)
 	
 	def MontoModificado(self):

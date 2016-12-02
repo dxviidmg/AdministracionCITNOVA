@@ -8,9 +8,10 @@ th, td {
     text-align: left;    
 }
 </style>
-<h1>Lista de partidas</h1>
+
 
 <p>Capitulo: {{capitulo.nombre}}</p>
+<p>Lista de partidas</p>
 
 <table>
 	<thead>
@@ -33,11 +34,3 @@ th, td {
 
 {%endfor%}
 </table>
-
-{%for mes in meses%}
-{{mes.monto_autorizado}}
-{%empty%}
-Vacio
-{%endfor%}
-
-{{suma_monto_autorizado_meses_por_partida}}

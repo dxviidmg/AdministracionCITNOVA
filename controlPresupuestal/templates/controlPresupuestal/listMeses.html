@@ -58,13 +58,13 @@ th, td {
 		<td>{{mes.monto_autorizado}}</td>
 		<td>{{mes.monto_ampliacion}}</td>
 		<td>{{mes.monto_reduccion}}</td>
-		<td>{%if mes.Modificado is NONE%}{{mes.monto_modificado}}{%endif%}</td>
+		<td>{%if mes.MontoModificado is NONE%}{{mes.monto_modificado}}{%endif%}</td>
 		<td>{{mes.monto_ejercido}}</td>
 		<td>{%if mes.MontoPorEjercer is NONE%}{{mes.monto_por_ejercer}}{%endif%}</td>
 	</tr>
 {%empty%}
 	<tr>
-		<td colspan="12"><p align="center">Lista de mess vacia</p></td>
+		<td colspan="12"><p align="center">Lista de meses vacia</p></td>
 	</tr>
 {%endfor%}
 	<tr>
