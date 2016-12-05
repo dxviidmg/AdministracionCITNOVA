@@ -1,0 +1,7 @@
+<h3>¿Estas seguro que deseas borrar la linea {{object}}</h3>
+<form method="post">
+	{%csrf_token%}
+	<input class="" type="submit" value="Si, Seguro">
+	
+	<a href="{%url 'controlPresupuestal:ListViewProgramas'%}"><input class="" type="button" value="Cancelar"></a>
+</form>

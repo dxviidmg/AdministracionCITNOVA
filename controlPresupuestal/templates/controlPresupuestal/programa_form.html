@@ -1,0 +1,7 @@
+	<form method="post" enctype="multipart/form-data">
+		{%csrf_token%}
+		{{form.as_p}}
+		<input type="submit" value="Guardar">
+
+		<a href="{%url 'controlPresupuestal:ListViewProgramas'%}"><input class="" type="button" value="Cancelar"></a>
+</form>

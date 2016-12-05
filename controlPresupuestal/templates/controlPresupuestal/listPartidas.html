@@ -24,7 +24,7 @@ th, td {
 	<tr>
 		<td>{{partida.codigo}}</td>
 		<td>{{partida.descripcion}}</td>
-		<td>{{partida.monto_anual_autorizado}}</td>
+		<td>{{partida.MontoAnualAutorizado}}{{partida.monto_anual_autorizado}}</td>
 		<td><a href="{%url 'controlPresupuestal:ListViewMeses' partida.pk%}">Ver detalle</a></td>
 	</tr>
 {%empty%}
@@ -34,3 +34,9 @@ th, td {
 
 {%endfor%}
 </table>
+
+{%for m in meses_de_todas_las_partida%}
+{{m.pk}}
+{%empty%}
+vacio
+{%endfor%}

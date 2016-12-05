@@ -10,6 +10,7 @@ th, td {
 </style>
 <h1>Lista de programas</h1>
 
+<a href="{%url 'controlPresupuestal:CreateViewPrograma' %}">Crear programa</a>
 <table>
 	<thead>
 		<th><p align="center">Nombre</p></th>
@@ -46,6 +47,8 @@ th, td {
 		<td>{{programa.fecha_creado}}</td>
 		<td>{{programa.monto}}</td>
 		<td><a href="{%url 'controlPresupuestal:ListViewCapitulos' programa.pk%}">Ver capitulos</a></td>
+		<td><a href="{%url 'controlPresupuestal:UpdateViewPrograma' programa.pk%}">Editar Información</a></td>
+		<td><a href="{%url 'controlPresupuestal:DeleteViewPrograma' programa.pk%}">Eliminar</a></td>
 	</tr>
 {%empty%}
 	<tr>

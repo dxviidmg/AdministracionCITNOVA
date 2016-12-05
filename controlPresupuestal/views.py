@@ -1,7 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 from .models import *
+from django.db.models import Sum
 #from querysetjoin import QuerySetJoin
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.core.urlresolvers import reverse_lazy 
 
 class ListViewProgramas(View):
 	def get(self, request):
@@ -32,12 +35,12 @@ class ListViewPartidas(View):
 
 		capitulo = get_object_or_404(Capitulo, pk=pk)
 		partidas = Partida.objects.filter(capitulo=capitulo).order_by('codigo')
-		mesesdeunapartida = Mes.objects.filter(partida__in=partidas)
-	
+		meses_de_todas_las_partida = Mes.objects.filter(partida__in=partidas)
+		
 		context = {
 		'capitulo': capitulo,
 		'partidas': partidas,
-		'meses': mesesdeunapartida,
+		'meses_de_todas_las_partida': meses_de_todas_las_partida,
 		}
 		return render(request, template_name, context)
 
@@ -47,22 +50,24 @@ class ListViewMeses(View):
 
 		partida = get_object_or_404(Partida, pk=pk)
 		meses = Mes.objects.filter(partida=partida).order_by('mes')
+		
+		total_monto_autorizado_dict = Mes.objects.filter(partida=partida).aggregate(Sum('monto_autorizado'))
+		total_monto_autorizado = total_monto_autorizado_dict['monto_autorizado__sum']
 
-		montos_por_mes = []
-		total_monto_autorizado = 0
-		total_monto_ampliacion = 0
-		total_monto_reduccion = 0
-		total_monto_ejercido = 0
-		total_monto_modificado = 0
-		total_monto_por_ejercer = 0
-		for mes in meses:
-			#monto_modificado = mes.monto_autorizado + mes.monto_ampliacion - mes.monto_reduccion 
-			total_monto_autorizado = total_monto_autorizado + mes.monto_autorizado
-			total_monto_ampliacion = total_monto_ampliacion + mes.monto_ampliacion
-			total_monto_reduccion = total_monto_reduccion + mes.monto_reduccion
-			total_monto_ejercido = total_monto_ejercido + mes.monto_ejercido
-			total_monto_modificado = total_monto_modificado + mes.monto_modificado
-			total_monto_por_ejercer = total_monto_por_ejercer + mes.monto_por_ejercer
+		total_monto_ampliacion_dict = Mes.objects.filter(partida=partida).aggregate(Sum('monto_ampliacion'))
+		total_monto_ampliacion = total_monto_ampliacion_dict['monto_ampliacion__sum']
+
+		total_monto_reduccion_dict = Mes.objects.filter(partida=partida).aggregate(Sum('monto_reduccion'))
+		total_monto_reduccion = total_monto_reduccion_dict['monto_reduccion__sum']
+
+		total_monto_modificado_dict = Mes.objects.filter(partida=partida).aggregate(Sum('monto_modificado'))
+		total_monto_modificado = total_monto_modificado_dict['monto_modificado__sum']
+
+		total_monto_ejercido_dict = Mes.objects.filter(partida=partida).aggregate(Sum('monto_ejercido'))
+		total_monto_ejercido = total_monto_ejercido_dict['monto_ejercido__sum']
+
+		total_monto_por_ejercer_dict = Mes.objects.filter(partida=partida).aggregate(Sum('monto_por_ejercer'))
+		total_monto_por_ejercer = total_monto_por_ejercer_dict['monto_por_ejercer__sum']
 		
 		context = {
 		'partida': partida,
@@ -70,8 +75,26 @@ class ListViewMeses(View):
 		'total_monto_autorizado': total_monto_autorizado,
 		'total_monto_ampliacion': total_monto_ampliacion,
 		'total_monto_reduccion': total_monto_reduccion,
-		'total_monto_ejercido': total_monto_ejercido,
 		'total_monto_modificado': total_monto_modificado,
+		'total_monto_ejercido': total_monto_ejercido,
 		'total_monto_por_ejercer': total_monto_por_ejercer,
 		}
 		return render(request, template_name, context)
+
+
+	
+class CreateViewPrograma(CreateView):
+	model = Programa
+	success_url = reverse_lazy('controlPresupuestal:ListViewProgramas')
+	fields = ['nombre', 'objetivo', 'actividad', 'meta', 'unidad_de_medida', 
+		'fuente_de_financiamiento', 'beneficiarios', 'oficio_de_autorizacion', 'año']
+
+class UpdateViewPrograma(UpdateView):
+	model = Programa
+	success_url = reverse_lazy('controlPresupuestal:ListViewProgramas')
+	fields = ['nombre', 'objetivo', 'actividad', 'meta', 'unidad_de_medida', 
+		'fuente_de_financiamiento', 'beneficiarios', 'oficio_de_autorizacion', 'año',]
+
+class DeleteViewPrograma(DeleteView):
+	model = Programa
+	success_url = reverse_lazy('controlPresupuestal:ListViewProgramas')

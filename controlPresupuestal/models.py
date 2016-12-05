@@ -1,6 +1,7 @@
 from django.db import models
 from decimal import Decimal
 from django.utils import timezone
+from django.db.models import Sum
 
 class Programa(models.Model):
 	Fuente_CHOICES = (
@@ -36,6 +37,12 @@ class Partida(models.Model):
 	codigo = models.IntegerField()
 	descripcion = models.TextField()	
 	monto_anual_autorizado = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+
+	def MontoAnualAutorizado(self):
+		total_monto_autorizado_dict = Mes.objects.aggregate(Sum('monto_autorizado'))
+		self.monto_anual_autorizado = total_monto_autorizado_dict['monto_autorizado__sum']
+		#self.monto_anual_autorizado
+		self.save()
 
 	def __str__(self):
 		return '{} {}'.format(self.codigo, self.descripcion)
