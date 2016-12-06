@@ -13,7 +13,7 @@ th, td {
 
 <p>Codigo: {{partida.codigo}}</p>
 <p>Descripcion: {{partida.descripcion}}</p>
-
+<a href="{%url 'controlPresupuestal:CreateViewMes' partida.pk%}">Crear Mes</a>
 <table>
 	<thead>
 		<th><p align="center">Mes</p></th>
@@ -23,34 +23,35 @@ th, td {
 		<th><p align="center">Modificado</p></th>
 		<th><p align="center">Ejercido</p></th>
 		<th><p align="center">Por ejercer</p></th>
+		<th colspan="2"><p align="center">Acciones</p></th>
 	</thead>
 {%for mes in meses%}
 	<tr>
 		<td>
 			{%if mes.mes == 1%}
-  					Enero
-  					{%elif mes.mes == 2%}
-  					Febrero
-  					{%elif mes.mes == 3%}
-  					Marzo
-  					{%elif mes.mes == 4%}
-  					Abril
-  					{%elif mes.mes == 5%}
-  					Mayo
-  					{%elif mes.mes == 6%}
-  					Junio
-  					{%elif mes.mes == 7%}
-  					Julio
-  					{%elif mes.mes == 8%}
-  					Agosto
-  					{%elif mes.mes == 9%}
-  					Septiembre
-  					{%elif mes.mes == 10%}
-  					Octubre
- 					{%elif mes.mes == 11%}
-  					Noviembre
-   					{%elif mes.mes == 12%}
-  					Diciembre
+				Enero
+			{%elif mes.mes == 2%}
+				Febrero
+			{%elif mes.mes == 3%}
+				Marzo
+			{%elif mes.mes == 4%}
+				Abril
+			{%elif mes.mes == 5%}
+				Mayo		
+			{%elif mes.mes == 6%}
+				Junio
+			{%elif mes.mes == 7%}
+				Julio
+			{%elif mes.mes == 8%}
+				Agosto
+			{%elif mes.mes == 9%}
+				Septiembre
+			{%elif mes.mes == 10%}
+				Octubre
+			{%elif mes.mes == 11%}
+				Noviembre
+			{%elif mes.mes == 12%}
+				Diciembre
 			{%endif%}
 		</td>
 		<td>{{mes.monto_autorizado}}</td>
@@ -59,6 +60,8 @@ th, td {
 		<td>{%if mes.MontoModificado is NONE%}{{mes.monto_modificado}}{%endif%}</td>
 		<td>{{mes.monto_ejercido}}</td>
 		<td>{%if mes.MontoPorEjercer is NONE%}{{mes.monto_por_ejercer}}{%endif%}</td>
+		<td><a href="{%url 'controlPresupuestal:UpdateViewMes' mes.pk%}">Editar</a></td>
+		<td><a href="{%url 'controlPresupuestal:DeleteViewMes' mes.pk%}">Eliminar</a></td>
 	</tr>
 {%empty%}
 	<tr>

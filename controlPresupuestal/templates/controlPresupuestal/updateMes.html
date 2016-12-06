@@ -1,0 +1,7 @@
+{{mes.pk}}
+<form action="." method="post">
+	{%csrf_token%}
+	{{EdicionMesForm.as_p}}
+		<input type="submit" value="Crear">
+		<a href="{%url 'controlPresupuestal:ListViewMeses' partida.pk%}"><input class="" type="button" value="Cancelar"></a>
+</form>
