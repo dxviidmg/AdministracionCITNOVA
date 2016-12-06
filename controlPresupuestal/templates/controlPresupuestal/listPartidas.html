@@ -12,20 +12,33 @@ th, td {
 
 <p>Capitulo: {{capitulo.nombre}}</p>
 <p>Lista de partidas</p>
-
+<a href="{%url 'controlPresupuestal:CreateViewPartida' capitulo.pk%}">Crear Partida</a>
+<a href="{%url 'controlPresupuestal:ListViewCapitulos' programa.pk%}">Regresa</a>
 <table>
 	<thead>
 		<th><p align="center">Codigo</p></th>
 		<th><p align="center">Descripcion</p></th>
 		<th><p align="center">Monto anual autorizado</p></th>
-		<th><p align="center">Acciones</p></th>
+		<th><p align="center">Monto anual ampliación</p></th>
+		<th><p align="center">Monto anual reducción</p></th>
+		<th><p align="center">Monto anual modificado</p></th>
+		<th><p align="center">Monto anual ejercido</p></th>
+		<th><p align="center">Monto anual por ejercer</p></th>
+		<th colspan="3"><p align="center">Acciones</p></th>
 	</thead>
 {%for partida in partidas%}
 	<tr>
 		<td>{{partida.codigo}}</td>
 		<td>{{partida.descripcion}}</td>
 		<td>{{partida.MontoAnualAutorizado}}{{partida.monto_anual_autorizado}}</td>
+		<td>{{partida.MontoAnualAmpliacion}}{{partida.monto_anual_ampliacion}}</td>
+		<td>{{partida.MontoAnualReduccion}}{{partida.monto_anual_reduccion}}</td>
+		<td>{{partida.MontoAnualModificado}}{{partida.monto_anual_modificado}}</td>
+		<td>{{partida.MontoAnualEjercido}}{{partida.monto_anual_ejercido}}</td>
+		<td>{{partida.MontoAnualPorEjercer}}{{partida.monto_anual_por_ejercer}}</td>
 		<td><a href="{%url 'controlPresupuestal:ListViewMeses' partida.pk%}">Ver detalle</a></td>
+		<td><a href="{%url 'controlPresupuestal:UpdateViewPartida' partida.pk%}">Editar</a></td>
+		<td><a href="{%url 'controlPresupuestal:DeleteViewPartida' partida.pk%}">Eliminar</a></td>
 	</tr>
 {%empty%}
 	<tr>
@@ -33,10 +46,14 @@ th, td {
 	</tr>
 
 {%endfor%}
-</table>
 
-{%for m in meses_de_todas_las_partida%}
-{{m.pk}}
-{%empty%}
-vacio
-{%endfor%}
+	<tr>
+		<td colspan="2">Total</td>
+		<td>{{total_monto_anual_autorizado}}</td>
+		<td>{{total_monto_anual_ampliacion}}</td>
+		<td>{{total_monto_anual_reduccion}}</td>
+		<td>{{total_monto_anual_modificado}}</td>
+		<td>{{total_monto_anual_ejercido}}</td>
+		<td>{{total_monto_anual_por_ejercer}}</td>
+	</tr>
+</table>

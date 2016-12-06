@@ -10,3 +10,8 @@ class MesEditForm(forms.ModelForm):
 	class Meta:
 		model = Mes
 		fields = ( 'monto_ampliacion','monto_reduccion', 'monto_ejercido',)
+
+class PartidaCreateForm(forms.ModelForm):
+	class Meta:
+		model = Partida
+		fields = ( 'codigo','descripcion',)

@@ -1,0 +1,7 @@
+{{capitulo.pk}}
+<form action="." method="post">
+	{%csrf_token%}
+	{{NuevaPartidaForm.as_p}}
+	<input type="submit" value="Crear">
+	<a href=""><input class="" type="button" value="Cancelar"></a>
+</form>

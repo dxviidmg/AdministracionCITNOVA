@@ -36,12 +36,36 @@ class ListViewPartidas(View):
 
 		capitulo = get_object_or_404(Capitulo, pk=pk)
 		partidas = Partida.objects.filter(capitulo=capitulo).order_by('codigo')
-		meses_de_todas_las_partida = Mes.objects.filter(partida__in=partidas)
+		programa = Programa.objects.get(capitulo=capitulo)
 		
+		total_monto_anual_autorizado_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_anual_autorizado'))
+		total_monto_anual_autorizado = total_monto_anual_autorizado_dict['monto_anual_autorizado__sum']
+		
+		total_monto_anual_ampliacion_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_anual_ampliacion'))
+		total_monto_anual_ampliacion = total_monto_anual_ampliacion_dict['monto_anual_ampliacion__sum']
+
+		total_monto_anual_reduccion_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_anual_reduccion'))
+		total_monto_anual_reduccion = total_monto_anual_reduccion_dict['monto_anual_reduccion__sum']
+
+		total_monto_anual_modificado_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_anual_modificado'))
+		total_monto_anual_modificado = total_monto_anual_modificado_dict['monto_anual_modificado__sum']
+
+		total_monto_anual_ejercido_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_anual_ejercido'))
+		total_monto_anual_ejercido = total_monto_anual_ejercido_dict['monto_anual_ejercido__sum']
+		
+		total_monto_anual_por_ejercer_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_anual_por_ejercer'))
+		total_monto_anual_por_ejercer = total_monto_anual_por_ejercer_dict['monto_anual_por_ejercer__sum']
+
 		context = {
 		'capitulo': capitulo,
 		'partidas': partidas,
-		'meses_de_todas_las_partida': meses_de_todas_las_partida,
+		'programa': programa,
+		'total_monto_anual_autorizado': total_monto_anual_autorizado,
+		'total_monto_anual_ampliacion': total_monto_anual_ampliacion,
+		'total_monto_anual_reduccion': total_monto_anual_reduccion,
+		'total_monto_anual_modificado': total_monto_anual_modificado,
+		'total_monto_anual_ejercido': total_monto_anual_ejercido,
+		'total_monto_anual_por_ejercer': total_monto_anual_por_ejercer,
 		}
 		return render(request, template_name, context)
 
@@ -51,6 +75,7 @@ class ListViewMeses(View):
 
 		partida = get_object_or_404(Partida, pk=pk)
 		meses = Mes.objects.filter(partida=partida).order_by('mes')
+		capitulo = Capitulo.objects.get(partida=partida)
 		
 		total_monto_autorizado_dict = Mes.objects.filter(partida=partida).aggregate(Sum('monto_autorizado'))
 		total_monto_autorizado = total_monto_autorizado_dict['monto_autorizado__sum']
@@ -73,6 +98,7 @@ class ListViewMeses(View):
 		context = {
 		'partida': partida,
 		'meses': meses,
+		'capitulo': capitulo,
 		'total_monto_autorizado': total_monto_autorizado,
 		'total_monto_ampliacion': total_monto_ampliacion,
 		'total_monto_reduccion': total_monto_reduccion,
@@ -97,6 +123,70 @@ class UpdateViewPrograma(UpdateView):
 class DeleteViewPrograma(DeleteView):
 	model = Programa
 	success_url = reverse_lazy('controlPresupuestal:ListViewProgramas')
+
+
+class CreateViewPartida(View):
+	def get(self, request, pk):
+		template_name = "controlPresupuestal/createPartida.html"
+		capitulo = get_object_or_404(Capitulo, pk=pk)
+		NuevaPartidaForm=PartidaCreateForm()
+
+		context = {
+		'capitulo': capitulo,
+		'NuevaPartidaForm': NuevaPartidaForm,
+		}
+		return render(request, template_name, context)
+	def post(self, request, pk):
+		template_name = "controlPresupuestal/createPartida.html"
+		capitulo = get_object_or_404(Capitulo, pk=pk)
+		
+		NuevaPartidaForm=PartidaCreateForm(request.POST)
+
+		if NuevaPartidaForm.is_valid:
+			NuevaPartida = NuevaPartidaForm.save(commit=False)
+			NuevaPartida.capitulo = capitulo
+			NuevaPartida.save()
+
+		return redirect("controlPresupuestal:ListViewPartidas", pk=capitulo.pk)
+
+class UpdateViewPartida(View):
+	def get(self, request, pk):
+		template_name = "controlPresupuestal/updatePartida.html"
+		partida = get_object_or_404(Partida, pk=pk)
+
+		EdicionPartidaForm = PartidaCreateForm(instance=partida)
+		context = {
+			'partida': partida,
+			'EdicionPartidaForm': EdicionPartidaForm,
+		}
+		return render(request, template_name, context)
+	def post(self,request, pk):
+		template_name = "controlPresupuestal/updatePartida.html"
+		partida = get_object_or_404(Partida, pk=pk)
+		capitulo = Capitulo.objects.get(partida=partida)
+		EdicionPartidaForm = PartidaCreateForm(instance=partida, data=request.POST)
+
+		if EdicionPartidaForm.is_valid:
+			EdicionPartidaForm.save()
+		return redirect("controlPresupuestal:ListViewPartidas", pk=capitulo.pk)
+
+class DeleteViewPartida(View):
+	def get(self, request, pk):
+		template_name = "controlPresupuestal/deletePartida.html"
+		partida = get_object_or_404(Partida, pk=pk)
+		capitulo = Capitulo.objects.get(partida=partida)
+		context = {
+		'partida': partida,
+		'capitulo': capitulo,
+		}
+		return render(request, template_name, context)
+	def post(self, request, pk):
+		template_name = "controlPresupuestal/deletePartida.html"
+		partida = get_object_or_404(Partida, pk=pk)
+		capitulo = Capitulo.objects.get(partida=partida)
+		if request.method=='POST':
+			partida.delete()
+		return redirect("controlPresupuestal:ListViewPartidas", pk=capitulo.pk)
 
 class CreateViewMes(View):
 	def get(self, request, pk):
@@ -123,12 +213,14 @@ class CreateViewMes(View):
 			NuevoMes.save()
 		return redirect("controlPresupuestal:ListViewMeses", pk=partida.pk)
 
+
 class UpdateViewMes(View):
 	def get(self, request, pk):
 		template_name = "controlPresupuestal/updateMes.html"
+
 		mes = get_object_or_404(Mes, pk=pk)
 		partida = Partida.objects.get(mes=mes)
-		EdicionMesForm = MesEditForm()
+		EdicionMesForm = MesEditForm(instance=mes)
 		context = {
 		'mes': mes,
 		'partida': partida,
@@ -137,9 +229,10 @@ class UpdateViewMes(View):
 		return render(request, template_name, context)
 	def post(self,request, pk):
 		template_name = "controlPresupuestal/updateMes.html"
+
 		mes = get_object_or_404(Mes, pk=pk)
 		partida = Partida.objects.get(mes=mes)
-		EdicionMesForm = MesEditForm(request.POST, instance=mes)
+		EdicionMesForm = MesEditForm(instance=mes,data=request.POST)
 
 		if EdicionMesForm.is_valid:
 			EdicionMesForm.save()

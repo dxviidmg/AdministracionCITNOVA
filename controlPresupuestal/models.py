@@ -2,6 +2,7 @@ from django.db import models
 from decimal import Decimal
 from django.utils import timezone
 from django.db.models import Sum
+from django.shortcuts import get_object_or_404
 
 class Programa(models.Model):
 	Fuente_CHOICES = (
@@ -36,12 +37,47 @@ class Partida(models.Model):
 	capitulo = models.ForeignKey(Capitulo)
 	codigo = models.IntegerField()
 	descripcion = models.TextField()	
-	monto_anual_autorizado = models.DecimalField(max_digits=20,decimal_places=2, default=0)
+	monto_anual_autorizado = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_anual_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_anual_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_anual_modificado = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_anual_ejercido = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_anual_por_ejercer = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
 
 	def MontoAnualAutorizado(self):
-		total_monto_autorizado_dict = Mes.objects.aggregate(Sum('monto_autorizado'))
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_autorizado_dict = Mes.objects.filter(partida=partida).aggregate(Sum('monto_autorizado'))
 		self.monto_anual_autorizado = total_monto_autorizado_dict['monto_autorizado__sum']
-		#self.monto_anual_autorizado
+		self.save()
+
+	def MontoAnualAmpliacion(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_ampliacion_dict = Mes.objects.filter(partida=partida).aggregate(Sum('monto_ampliacion'))
+		self.monto_anual_ampliacion = total_monto_ampliacion_dict['monto_ampliacion__sum']
+		self.save()
+
+	def MontoAnualReduccion(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_reduccion_dict = Mes.objects.filter(partida=partida).aggregate(Sum('monto_reduccion'))
+		self.monto_anual_reduccion = total_monto_reduccion_dict['monto_reduccion__sum']
+		self.save()
+
+	def MontoAnualModificado(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_modificado_dict = Mes.objects.filter(partida=partida).aggregate(Sum('monto_modificado'))
+		self.monto_anual_modificado = total_monto_modificado_dict['monto_modificado__sum']
+		self.save()
+
+	def MontoAnualEjercido(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_ejercido_dict = Mes.objects.filter(partida=partida).aggregate(Sum('monto_ejercido'))
+		self.monto_anual_ejercido = total_monto_ejercido_dict['monto_ejercido__sum']
+		self.save()
+
+	def MontoAnualPorEjercer(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_por_ejercer_dict = Mes.objects.filter(partida=partida).aggregate(Sum('monto_por_ejercer'))
+		self.monto_anual_por_ejercer = total_monto_por_ejercer_dict['monto_por_ejercer__sum']
 		self.save()
 
 	def __str__(self):

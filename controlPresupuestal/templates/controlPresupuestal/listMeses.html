@@ -14,6 +14,7 @@ th, td {
 <p>Codigo: {{partida.codigo}}</p>
 <p>Descripcion: {{partida.descripcion}}</p>
 <a href="{%url 'controlPresupuestal:CreateViewMes' partida.pk%}">Crear Mes</a>
+<a href="{%url 'controlPresupuestal:ListViewPartidas' capitulo.pk%}">Regresa</a>
 <table>
 	<thead>
 		<th><p align="center">Mes</p></th>
@@ -23,7 +24,7 @@ th, td {
 		<th><p align="center">Modificado</p></th>
 		<th><p align="center">Ejercido</p></th>
 		<th><p align="center">Por ejercer</p></th>
-		<th colspan="2"><p align="center">Acciones</p></th>
+		<th ><p align="center">Acciones</p></th>
 	</thead>
 {%for mes in meses%}
 	<tr>

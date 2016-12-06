@@ -1,0 +1,7 @@
+{{partida.pk}}
+<form action="." method="post">
+	{%csrf_token%}
+	¿Esta seguro en eliminar el mes de ?
+	<input type="submit" value="Eliminar">
+	<a href="{%url 'controlPresupuestal:ListViewPartidas' capitulo.pk%}"><input class="" type="button" value="Cancelar"></a>
+</form>
