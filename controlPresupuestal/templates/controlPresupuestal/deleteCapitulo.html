@@ -1,6 +1,6 @@
+<h3>¿Esta seguro en eliminar el capítulo {{capitulo.nombre}} ?</h3>
 <form action="." method="post">
 	{%csrf_token%}
-	¿Esta seguro en eliminar el mes de ?
 	<input type="submit" value="Eliminar">
 	<a href="{%url 'controlPresupuestal:ListViewCapitulos' programa.pk%}"><input class="" type="button" value="Cancelar"></a>
 </form>

@@ -10,31 +10,78 @@ th, td {
 </style>
 
 <p>Programa: {{programa.nombre}}</p>
-<p>Lista de Capitulos</p>
-<a href="{%url 'controlPresupuestal:CreateViewCapitulo' programa.pk%}">Crear Capitulo</a>
+<p>Lista de Capítulos</p>
+<a href="{%url 'controlPresupuestal:CreateViewCapitulo' programa.pk%}">Crear Capítulo</a>
 <a href="{%url 'controlPresupuestal:ListViewProgramas'%}">Regresar</a>
 <table>
 	<thead>
-		<th><p align="center">Codigo</p></th>
+		<th><p align="center">Código</p></th>
 		<th><p align="center">Nombre</p></th>
 		<th><p align="center">Monto anual autorizado</p></th>
-		<th><p align="center">Monto anual ampliacion</p></th>
-		<th><p align="center">Monto anual reduccion</p></th>
+		<th><p align="center">Monto anual ampliación</p></th>
+		<th><p align="center">Monto anual reducción</p></th>
 		<th><p align="center">Monto anual modificado</p></th>
 		<th><p align="center">Monto anual ejercido</p></th>
 		<th><p align="center">Monto anual por ejercer</p></th>
-		<th><p align="center">Acciones</p></th>
+		<th colspan="3"><p align="center">Acciones</p></th>
 	</thead>
 {%for capitulo in capitulos%}
 	<tr>
 		<td>{{capitulo.codigo}}</td>
 		<td>{{capitulo.nombre}}</td>
-		<td>{{capitulo.MontoAnualAutorizado}}{{capitulo.monto_anual_autorizado}}</td>
-		<td>{{capitulo.MontoAnualAmpliacion}}{{capitulo.monto_anual_ampliacion}}</td>
-		<td>{{capitulo.MontoAnualReduccion}}{{capitulo.monto_anual_reduccion}}</td>
-		<td>{{capitulo.MontoAnualModificado}}{{capitulo.monto_anual_modificado}}</td>
-		<td>{{capitulo.MontoAnualEjercido}}{{capitulo.monto_anual_ejercido}}</td>
-		<td>{{capitulo.MontoAnualPorEjercer}}{{capitulo.monto_anual_por_ejercer}}</td>
+		<td>{% if capitulo.MontoAnualAutorizado is None%}
+				{%if capitulo.monto_anual_autorizado is None%}
+					Por definir
+				{%else%}
+					$ {{capitulo.monto_anual_autorizado}}
+				{%endif%}
+			{%endif%}
+		</td>
+
+		<td>{% if capitulo.MontoAnualAmpliacion is None%}
+				{%if capitulo.monto_anual_ampliacion is None%}
+					Por definir
+				{%else%}
+					$ {{capitulo.monto_anual_ampliacion}}
+				{%endif%}
+			{%endif%}
+		</td>
+
+		<td>{% if capitulo.MontoAnualReduccion is None%}
+				{%if capitulo.monto_anual_reduccion is None%}
+					Por definir
+				{%else%}
+					$ {{capitulo.monto_anual_reduccion}}
+				{%endif%}
+			{%endif%}
+		</td>
+
+		<td>{% if capitulo.MontoAnualModificado is None%}
+				{%if capitulo.monto_anual_modificado is None%}
+					Por definir
+				{%else%}
+					$ {{capitulo.monto_anual_modificado}}
+				{%endif%}
+			{%endif%}
+		</td>
+
+		<td>{% if capitulo.MontoAnualEjercido is None%}
+				{%if capitulo.monto_anual_ejercido is None%}
+					Por definir
+				{%else%}
+					$ {{capitulo.monto_anual_ejercido}}
+				{%endif%}
+			{%endif%}
+		</td>
+
+		<td>{% if capitulo.MontoAnualPorEjercer is None%}
+				{%if capitulo.monto_anual_por_ejercer is None%}
+					Por definir
+				{%else%}
+					$ {{capitulo.monto_anual_por_ejercer}}
+				{%endif%}
+			{%endif%}
+		</td>
 		<td><a href="{%url 'controlPresupuestal:ListViewPartidas' capitulo.pk%}">Ver partidas</a></td>
 		<td><a href="{%url 'controlPresupuestal:UpdateViewCapitulo' capitulo.pk%}">Editar</a></td>
 		<td><a href="{%url 'controlPresupuestal:DeleteViewCapitulo' capitulo.pk%}">Eliminar</a></td>

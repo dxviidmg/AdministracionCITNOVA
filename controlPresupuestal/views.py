@@ -178,6 +178,7 @@ class DeleteViewCapitulo(View):
 		programa = Programa.objects.get(capitulo=capitulo)
 
 		context = {
+		'capitulo': capitulo,
 		'programa': programa,
 		}
 		return render(request, template_name, context)
@@ -216,10 +217,12 @@ class UpdateViewPartida(View):
 	def get(self, request, pk):
 		template_name = "controlPresupuestal/updatePartida.html"
 		partida = get_object_or_404(Partida, pk=pk)
+		capitulo = Capitulo.objects.get(partida=partida)
 
 		EdicionPartidaForm = PartidaCreateForm(instance=partida)
 		context = {
 			'partida': partida,
+			'capitulo': capitulo,
 			'EdicionPartidaForm': EdicionPartidaForm,
 		}
 		return render(request, template_name, context)

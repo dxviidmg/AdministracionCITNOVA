@@ -9,22 +9,22 @@ th, td {
 }
 </style>
 
-<h1>Lista de meses</h1>
+<h3>Lista de meses</h3>
 
 <p>Codigo: {{partida.codigo}}</p>
 <p>Descripcion: {{partida.descripcion}}</p>
 <a href="{%url 'controlPresupuestal:CreateViewMes' partida.pk%}">Crear Mes</a>
-<a href="{%url 'controlPresupuestal:ListViewPartidas' capitulo.pk%}">Regresa</a>
+<a href="{%url 'controlPresupuestal:ListViewPartidas' capitulo.pk%}">Regresar</a>
 <table>
 	<thead>
 		<th><p align="center">Mes</p></th>
 		<th><p align="center">Autorizado</p></th>
-		<th><p align="center">Aumento</p></th>
-		<th><p align="center">Reduccion</p></th>
+		<th><p align="center">Ampliación</p></th>
+		<th><p align="center">Reducción</p></th>
 		<th><p align="center">Modificado</p></th>
 		<th><p align="center">Ejercido</p></th>
 		<th><p align="center">Por ejercer</p></th>
-		<th ><p align="center">Acciones</p></th>
+		<th colspan="2"><p align="center">Acciones</p></th>
 	</thead>
 {%for mes in meses%}
 	<tr>
@@ -55,12 +55,12 @@ th, td {
 				Diciembre
 			{%endif%}
 		</td>
-		<td>{{mes.monto_autorizado}}</td>
-		<td>{{mes.monto_ampliacion}}</td>
-		<td>{{mes.monto_reduccion}}</td>
-		<td>{%if mes.MontoModificado is NONE%}{{mes.monto_modificado}}{%endif%}</td>
-		<td>{{mes.monto_ejercido}}</td>
-		<td>{%if mes.MontoPorEjercer is NONE%}{{mes.monto_por_ejercer}}{%endif%}</td>
+		<td>$ {{mes.monto_autorizado}}</td>
+		<td>$ {{mes.monto_ampliacion}}</td>
+		<td>$ {{mes.monto_reduccion}}</td>
+		<td>$ {%if mes.MontoModificado is NONE%}{{mes.monto_modificado}}{%endif%}</td>
+		<td>$ {{mes.monto_ejercido}}</td>
+		<td>$ {%if mes.MontoPorEjercer is NONE%}{{mes.monto_por_ejercer}}{%endif%}</td>
 		<td><a href="{%url 'controlPresupuestal:UpdateViewMes' mes.pk%}">Editar</a></td>
 		<td><a href="{%url 'controlPresupuestal:DeleteViewMes' mes.pk%}">Eliminar</a></td>
 	</tr>

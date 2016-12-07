@@ -37,7 +37,7 @@ th, td {
 			Federal
 			{%elif programa.fuente_de_financiamiento == 2%}
 			Estatal
-			{%elif programa.fuente_de_financiamiento == 2%}
+			{%elif programa.fuente_de_financiamiento == 3%}
 			Propios
 			{%endif%}
 		</td>
@@ -45,8 +45,14 @@ th, td {
 		<td>{{programa.oficio_de_autorizacion}}</td>
 		<td>{{programa.año}}</td>
 		<td>{{programa.fecha_creado}}</td>
-		<td>{{programa.MontoAutorizado}}{{programa.monto_autorizado}}</td>
-		<td><a href="{%url 'controlPresupuestal:ListViewCapitulos' programa.pk%}">Ver capitulos</a></td>
+		<td>{%if programa.MontoAutorizado is None%}
+				{%if programa.monto_autorizado is None%}
+				Por definir
+				{%else%}
+				 $ {{programa.monto_autorizado}}
+				{%endif%}
+			{%endif%}</td>
+		<td><a href="{%url 'controlPresupuestal:ListViewCapitulos' programa.pk%}">Ver capítulos</a></td>
 		<td><a href="{%url 'controlPresupuestal:UpdateViewPrograma' programa.pk%}">Editar Información</a></td>
 		<td><a href="{%url 'controlPresupuestal:DeleteViewPrograma' programa.pk%}">Eliminar</a></td>
 	</tr>
