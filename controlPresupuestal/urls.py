@@ -4,9 +4,7 @@ from . import views
 
 urlpatterns = [
 #	
-	url(r'^programas/nuevo/$', views.CreateViewPrograma.as_view(), name="CreateViewPrograma"),
-	url(r'^programas/actualizar/(?P<pk>\d+)/$', views.UpdateViewPrograma.as_view(), name="UpdateViewPrograma"),
-	url(r'^programas/eliminar/(?P<pk>\d+)/$', views.DeleteViewPrograma.as_view(), name="DeleteViewPrograma"),
+
 	
 
 	url(r'^programas/capitulos/partidas/meses/nuevo/(?P<pk>\d+)/$', views.CreateViewMes.as_view(), name="CreateViewMes"),
@@ -19,7 +17,14 @@ urlpatterns = [
 	url(r'^programas/capitulos/partidas/eliminar/(?P<pk>\d+)/$', views.DeleteViewPartida.as_view(), name="DeleteViewPartida"),
 	url(r'^programas/capitulos/partidas/(?P<pk>\d+)/$', views.ListViewPartidas.as_view(), name="ListViewPartidas"),
 
+	url(r'^programas/capitulos/nuevo/(?P<pk>\d+)/$', views.CreateViewCapitulo.as_view(), name="CreateViewCapitulo"),
+	url(r'^programas/capitulos/actualizar/(?P<pk>\d+)/$', views.UpdateViewCapitulo.as_view(), name="UpdateViewCapitulo"),
+	url(r'^programas/capitulos/eliminar/(?P<pk>\d+)/$', views.DeleteViewCapitulo.as_view(), name="DeleteViewCapitulo"),
 	url(r'^programas/capitulos/(?P<pk>\d+)/$', views.ListViewCapitulos.as_view(), name="ListViewCapitulos"),
+	
+	url(r'^programas/nuevo/$', views.CreateViewPrograma.as_view(), name="CreateViewPrograma"),
+	url(r'^programas/actualizar/(?P<pk>\d+)/$', views.UpdateViewPrograma.as_view(), name="UpdateViewPrograma"),
+	url(r'^programas/eliminar/(?P<pk>\d+)/$', views.DeleteViewPrograma.as_view(), name="DeleteViewPrograma"),
 	url(r'^programas',views.ListViewProgramas.as_view(),name='ListViewProgramas'),
 
 ]

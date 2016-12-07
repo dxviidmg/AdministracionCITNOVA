@@ -125,6 +125,70 @@ class DeleteViewPrograma(DeleteView):
 	success_url = reverse_lazy('controlPresupuestal:ListViewProgramas')
 
 
+class CreateViewCapitulo(View):
+	def get(self, request, pk):
+		template_name = "controlPresupuestal/createCapitulo.html"
+		programa = get_object_or_404(Programa, pk=pk)
+		NuevoCapituloForm=CapituloCreateForm()
+
+		context = {
+		'programa': programa,
+		'NuevoCapituloForm': NuevoCapituloForm,
+		}
+		return render(request, template_name, context)
+	def post(self, request, pk):
+		template_name = "controlPresupuestal/createCapitulo.html"
+		programa = get_object_or_404(Programa, pk=pk)
+		
+		NuevoCapituloForm=CapituloCreateForm(request.POST)
+
+		if NuevoCapituloForm.is_valid:
+			NuevoCapitulo = NuevoCapituloForm.save(commit=False)
+			NuevoCapitulo.programa = programa
+			NuevoCapitulo.save()
+
+		return redirect("controlPresupuestal:ListViewCapitulos", pk=programa.pk)
+
+class UpdateViewCapitulo(View):
+	def get(self, request, pk):
+		template_name = "controlPresupuestal/updateCapitulo.html"
+		capitulo = get_object_or_404(Capitulo, pk=pk)
+		programa = Programa.objects.get(capitulo=capitulo)
+		EdicionCapituloForm=CapituloCreateForm(instance=capitulo)
+
+		context = {
+		'programa': programa,
+		'EdicionCapituloForm': EdicionCapituloForm,
+		}
+		return render(request, template_name, context)
+	def post(self,request, pk):
+		template_name = "controlPresupuestal/updateCapitulo.html"
+		capitulo = get_object_or_404(Capitulo, pk=pk)
+		programa = Programa.objects.get(capitulo=capitulo)
+		EdicionCapituloForm=CapituloCreateForm(instance=capitulo, data=request.POST)
+
+		if EdicionCapituloForm.is_valid:
+			EdicionCapituloForm.save()
+		return redirect("controlPresupuestal:ListViewCapitulos", pk=programa.pk)
+
+class DeleteViewCapitulo(View):
+	def get(self, request, pk):
+		template_name = "controlPresupuestal/deleteCapitulo.html"
+		capitulo = get_object_or_404(Capitulo, pk=pk)
+		programa = Programa.objects.get(capitulo=capitulo)
+
+		context = {
+		'programa': programa,
+		}
+		return render(request, template_name, context)
+	def post(self, request, pk):
+		template_name = "controlPresupuestal/deleteCapitulo.html"
+		capitulo = get_object_or_404(Capitulo, pk=pk)
+		programa = Programa.objects.get(capitulo=capitulo)
+		if request.method=='POST':
+			capitulo.delete()
+		return redirect("controlPresupuestal:ListViewCapitulos", pk=programa.pk)
+
 class CreateViewPartida(View):
 	def get(self, request, pk):
 		template_name = "controlPresupuestal/createPartida.html"
@@ -146,7 +210,6 @@ class CreateViewPartida(View):
 			NuevaPartida = NuevaPartidaForm.save(commit=False)
 			NuevaPartida.capitulo = capitulo
 			NuevaPartida.save()
-
 		return redirect("controlPresupuestal:ListViewPartidas", pk=capitulo.pk)
 
 class UpdateViewPartida(View):

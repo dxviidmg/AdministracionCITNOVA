@@ -1,0 +1,7 @@
+{{programa.pk}}
+<form action="." method="post">
+	{%csrf_token%}
+	{{NuevoCapituloForm.as_p}}
+	<a href="{%url 'controlPresupuestal:ListViewCapitulos' programa.pk%}"><input type="submit" value="Crear"></a>
+	<a href="{%url 'controlPresupuestal:ListViewCapitulos' programa.pk%}"><input class="" type="button" value="Cancelar"></a>
+</form>

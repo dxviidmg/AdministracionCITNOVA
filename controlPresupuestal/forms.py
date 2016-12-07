@@ -15,3 +15,8 @@ class PartidaCreateForm(forms.ModelForm):
 	class Meta:
 		model = Partida
 		fields = ( 'codigo','descripcion',)
+
+class CapituloCreateForm(forms.ModelForm):
+	class Meta:
+		model = Capitulo
+		fields = ( 'codigo','nombre',)

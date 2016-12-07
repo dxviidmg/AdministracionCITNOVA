@@ -45,7 +45,7 @@ th, td {
 		<td>{{programa.oficio_de_autorizacion}}</td>
 		<td>{{programa.año}}</td>
 		<td>{{programa.fecha_creado}}</td>
-		<td>{{programa.monto}}</td>
+		<td>{{programa.MontoAutorizado}}{{programa.monto_autorizado}}</td>
 		<td><a href="{%url 'controlPresupuestal:ListViewCapitulos' programa.pk%}">Ver capitulos</a></td>
 		<td><a href="{%url 'controlPresupuestal:UpdateViewPrograma' programa.pk%}">Editar Información</a></td>
 		<td><a href="{%url 'controlPresupuestal:DeleteViewPrograma' programa.pk%}">Eliminar</a></td>

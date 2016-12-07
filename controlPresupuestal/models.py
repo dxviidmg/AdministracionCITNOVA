@@ -20,8 +20,14 @@ class Programa(models.Model):
 	oficio_de_autorizacion = models.CharField(max_length=20)
 	año = models.IntegerField()
 	fecha_creado = models.DateTimeField(default=timezone.now)
-	monto = models.DecimalField(max_digits=20,decimal_places=2, default=0)
-
+	monto_autorizado = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	
+	def MontoAutorizado(self):
+		programa = Programa.objects.get(pk=self.pk)
+		total_monto_autorizado_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_anual_autorizado'))
+		self.monto_autorizado = total_monto_autorizado_dict['monto_anual_autorizado__sum']
+		self.save()
+	
 	def __str__(self):
 		return self.nombre
 
@@ -29,7 +35,48 @@ class Capitulo(models.Model):
 	programa = models.ForeignKey(Programa)
 	codigo = models.CharField(max_length=4)
 	nombre = models.CharField(max_length=50)
+	monto_anual_autorizado = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_anual_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_anual_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_anual_modificado = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_anual_ejercido = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_anual_por_ejercer = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
 
+	def MontoAnualAutorizado(self):
+		capitulo = Capitulo.objects.get(pk=self.pk)
+		total_monto_anual_autorizado_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_anual_autorizado'))
+		self.monto_anual_autorizado = total_monto_anual_autorizado_dict['monto_anual_autorizado__sum']
+		self.save()
+
+	def MontoAnualAmpliacion(self):
+		capitulo = Capitulo.objects.get(pk=self.pk)
+		total_monto_anual_ampliacion_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_anual_ampliacion'))
+		self.monto_anual_ampliacion = total_monto_anual_ampliacion_dict['monto_anual_ampliacion__sum']
+		self.save()
+
+	def MontoAnualReduccion(self):
+		capitulo = Capitulo.objects.get(pk=self.pk)
+		total_monto_anual_reduccion_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_anual_reduccion'))
+		self.monto_anual_reduccion = total_monto_anual_reduccion_dict['monto_anual_reduccion__sum']
+		self.save()
+
+	def MontoAnualModificado(self):
+		capitulo = Capitulo.objects.get(pk=self.pk)
+		total_monto_anual_modificado_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_anual_modificado'))
+		self.monto_anual_modificado = total_monto_anual_modificado_dict['monto_anual_modificado__sum']
+		self.save()
+
+	def MontoAnualEjercido(self):
+		capitulo = Capitulo.objects.get(pk=self.pk)
+		total_monto_anual_ejercido_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_anual_ejercido'))
+		self.monto_anual_ejercido = total_monto_anual_ejercido_dict['monto_anual_ejercido__sum']
+		self.save()
+
+	def MontoAnualPorEjercer(self):
+		capitulo = Capitulo.objects.get(pk=self.pk)
+		total_monto_anual_por_ejercer_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_anual_por_ejercer'))
+		self.monto_anual_por_ejercer = total_monto_anual_por_ejercer_dict['monto_anual_por_ejercer__sum']
+		self.save()
 	def __str__(self):
 		return '{} {}'.format(self.codigo, self.nombre)
 
