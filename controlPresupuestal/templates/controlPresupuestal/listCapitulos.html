@@ -1,3 +1,5 @@
+{% load humanize %}
+
 <style>
 table, th, td {
     border: 1px solid black;
@@ -28,57 +30,52 @@ th, td {
 {%for capitulo in capitulos%}
 	<tr>
 		<td>{{capitulo.codigo}}</td>
-		<td>{{capitulo.nombre}}</td>
+		<td>{%if capitulo.CreaNombre is None%}{{capitulo.nombre}}{%endif%}</td>
 		<td>{% if capitulo.MontoAnualAutorizado is None%}
 				{%if capitulo.monto_anual_autorizado is None%}
 					Por definir
 				{%else%}
-					$ {{capitulo.monto_anual_autorizado}}
+					${{capitulo.monto_anual_autorizado|intcomma}}
 				{%endif%}
 			{%endif%}
 		</td>
-
 		<td>{% if capitulo.MontoAnualAmpliacion is None%}
 				{%if capitulo.monto_anual_ampliacion is None%}
 					Por definir
 				{%else%}
-					$ {{capitulo.monto_anual_ampliacion}}
+					${{capitulo.monto_anual_ampliacion|intcomma}}
 				{%endif%}
 			{%endif%}
 		</td>
-
 		<td>{% if capitulo.MontoAnualReduccion is None%}
 				{%if capitulo.monto_anual_reduccion is None%}
 					Por definir
 				{%else%}
-					$ {{capitulo.monto_anual_reduccion}}
+					${{capitulo.monto_anual_reduccion|intcomma}}
 				{%endif%}
 			{%endif%}
 		</td>
-
 		<td>{% if capitulo.MontoAnualModificado is None%}
 				{%if capitulo.monto_anual_modificado is None%}
 					Por definir
 				{%else%}
-					$ {{capitulo.monto_anual_modificado}}
+					${{capitulo.monto_anual_modificado|intcomma}}
 				{%endif%}
 			{%endif%}
 		</td>
-
 		<td>{% if capitulo.MontoAnualEjercido is None%}
 				{%if capitulo.monto_anual_ejercido is None%}
 					Por definir
 				{%else%}
-					$ {{capitulo.monto_anual_ejercido}}
+					${{capitulo.monto_anual_ejercido|intcomma}}
 				{%endif%}
 			{%endif%}
 		</td>
-
 		<td>{% if capitulo.MontoAnualPorEjercer is None%}
 				{%if capitulo.monto_anual_por_ejercer is None%}
 					Por definir
 				{%else%}
-					$ {{capitulo.monto_anual_por_ejercer}}
+					${{capitulo.monto_anual_por_ejercer|intcomma}}
 				{%endif%}
 			{%endif%}
 		</td>
@@ -88,7 +85,7 @@ th, td {
 	</tr>
 {%empty%}
 	<tr>
-		<td colspan="12"><p align="center">Lista de programas vacia</p></td>
+		<td colspan="12"><p align="center">Lista de capitulos vacia</p></td>
 	</tr>
 </table>
 {%endfor%}

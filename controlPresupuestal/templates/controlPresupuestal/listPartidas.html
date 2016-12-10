@@ -1,3 +1,5 @@
+{% load humanize %}
+
 <style>
 table, th, td {
     border: 1px solid black;
@@ -34,7 +36,7 @@ th, td {
 				{%if partida.monto_anual_autorizado is None%}
 					Por definir
 				{%else%}
-					$ {{partida.monto_anual_autorizado}}
+					$ {{partida.monto_anual_autorizado|intcomma}}
 				{%endif%}
 			{%endif%}
 		</td>
@@ -42,7 +44,7 @@ th, td {
 				{%if partida.monto_anual_ampliacion is None%}
 					Por definir
 				{%else%}
-					$ {{partida.monto_anual_ampliacion}}
+					$ {{partida.monto_anual_ampliacion|intcomma}}
 				{%endif%}
 			{%endif%}
 		</td>
@@ -50,7 +52,7 @@ th, td {
 				{%if partida.monto_anual_reduccion is None%}
 					Por definir
 				{%else%}
-					$ {{partida.monto_anual_reduccion}}
+					$ {{partida.monto_anual_reduccion|intcomma}}
 				{%endif%}
 			{%endif%}
 		</td>
@@ -58,7 +60,7 @@ th, td {
 				{%if partida.monto_anual_modificado is None%}
 					Por definir
 				{%else%}
-					$ {{partida.monto_anual_modificado}}
+					$ {{partida.monto_anual_modificado|intcomma}}
 				{%endif%}
 			{%endif%}
 		</td>
@@ -66,7 +68,7 @@ th, td {
 				{%if partida.monto_anual_ejercido is None%}
 					Por definir
 				{%else%}
-					$ {{partida.monto_anual_ejercido}}
+					$ {{partida.monto_anual_ejercido|intcomma}}
 				{%endif%}
 			{%endif%}
 		</td>
@@ -74,7 +76,7 @@ th, td {
 				{%if partida.monto_anual_por_ejercer is None%}
 					Por definir
 				{%else%}
-					$ {{partida.monto_anual_por_ejercer}}
+					$ {{partida.monto_anual_por_ejercer|intcomma}}
 				{%endif%}
 			{%endif%}
 		</td>

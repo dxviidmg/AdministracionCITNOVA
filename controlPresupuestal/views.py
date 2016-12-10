@@ -6,13 +6,13 @@ from django.db.models import Sum
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from .forms import *
+from django.contrib import messages
 
 class ListViewProgramas(View):
 	def get(self, request):
 		template_name = "controlPresupuestal/listProgramas.html"
 
-		programas = Programa.objects.all()
-
+		programas = Programa.objects.all().order_by('nombre')
 		context = {
 		'programas': programas,
 		}
@@ -22,7 +22,7 @@ class ListViewCapitulos(View):
 	def get(self, request, pk):
 		template_name = "controlPresupuestal/listCapitulos.html"
 		programa = get_object_or_404(Programa, pk=pk)
-		capitulos = Capitulo.objects.filter(programa=programa)
+		capitulos = Capitulo.objects.filter(programa=programa).order_by('codigo')
 
 		context = {
 		'programa': programa,
@@ -302,6 +302,8 @@ class UpdateViewMes(View):
 
 		if EdicionMesForm.is_valid:
 			EdicionMesForm.save()
+
+
 		return redirect("controlPresupuestal:ListViewMeses", pk=partida.pk)
 
 class DeleteViewMes(View):

@@ -1,3 +1,5 @@
+{% load humanize %}
+
 <style>
 table, th, td {
     border: 1px solid black;
@@ -55,12 +57,12 @@ th, td {
 				Diciembre
 			{%endif%}
 		</td>
-		<td>$ {{mes.monto_autorizado}}</td>
-		<td>$ {{mes.monto_ampliacion}}</td>
-		<td>$ {{mes.monto_reduccion}}</td>
-		<td>$ {%if mes.MontoModificado is NONE%}{{mes.monto_modificado}}{%endif%}</td>
-		<td>$ {{mes.monto_ejercido}}</td>
-		<td>$ {%if mes.MontoPorEjercer is NONE%}{{mes.monto_por_ejercer}}{%endif%}</td>
+		<td>$ {{mes.monto_autorizado|intcomma}}</td>
+		<td>$ {{mes.monto_ampliacion|intcomma}}</td>
+		<td>$ {{mes.monto_reduccion|intcomma}}</td>
+		<td>$ {%if mes.MontoModificado is NONE%}{{mes.monto_modificado|intcomma}}{%endif%}</td>
+		<td>$ {{mes.monto_ejercido|intcomma}}</td>
+		<td>$ {%if mes.MontoPorEjercer is NONE%}{{mes.monto_por_ejercer|intcomma}}{%endif%}</td>
 		<td><a href="{%url 'controlPresupuestal:UpdateViewMes' mes.pk%}">Editar</a></td>
 		<td><a href="{%url 'controlPresupuestal:DeleteViewMes' mes.pk%}">Eliminar</a></td>
 	</tr>

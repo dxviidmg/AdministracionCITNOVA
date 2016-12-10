@@ -19,4 +19,4 @@ class PartidaCreateForm(forms.ModelForm):
 class CapituloCreateForm(forms.ModelForm):
 	class Meta:
 		model = Capitulo
-		fields = ( 'codigo','nombre',)
+		fields = ( 'codigo',)
