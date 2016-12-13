@@ -1,4 +1,4 @@
-<h3>	¿Esta seguro en eliminar el mes de 
+<p>	¿Esta seguro en eliminar el mes de <em>
 			{%if mes.mes == 1%}
 				Enero
 			{%elif mes.mes == 2%}
@@ -23,10 +23,10 @@
 				Noviembre
 			{%elif mes.mes == 12%}
 				Diciembre
-			{%endif%}?</h3>
+			{%endif%}?</em></p>
 <form action="." method="post">
 	{%csrf_token%}
 
-	<input type="submit" value="Eliminar">
+	<input type="submit" value="Si">
 	<a href="{%url 'controlPresupuestal:ListViewMeses' partida.pk%}"><input class="" type="button" value="Cancelar"></a>
 </form>

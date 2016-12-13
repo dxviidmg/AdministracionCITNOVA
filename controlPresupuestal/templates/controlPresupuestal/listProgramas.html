@@ -13,18 +13,15 @@ th, td {
 <h1>Lista de programas</h1>
 
 <a href="{%url 'controlPresupuestal:CreateViewPrograma' %}">Crear programa</a>
+
 <table>
 	<thead>
 		<th><p align="center">Nombre</p></th>
-		<th><p align="center">Objetivo</p></th>
 		<th><p align="center">Actividad</p></th>
 		<th><p align="center">Meta</p></th>
 		<th><p align="center">Unidad de medida</p></th>
 		<th><p align="center">Fuente de financiamiento</p></th>
-		<th><p align="center">Beneficiarios</p></th>
-		<th><p align="center">Oficio de autorización</p></th>
 		<th><p align="center">Año</p></th>
-		<th><p align="center">Fecha de captura</p></th>
 		<th><p align="center">Monto autorizado</p></th>
 		<th><p align="center">Monto ampliación</p></th>
 		<th><p align="center">Monto reducción</p></th>
@@ -33,10 +30,11 @@ th, td {
 		<th><p align="center">Monto por ejercer</p></th>
 		<th colspan="3"><p align="center">Acciones</p></th>
 	</thead>
+
 {%for programa in programas%}
+	
 	<tr>
 		<td>{{programa.nombre}}</td>
-		<td>{{programa.objetivo}}</td>
 		<td>{{programa.actividad}}</td>
 		<td>{{programa.meta}}</td>
 		<td>{{programa.unidad_de_medida}}</td>
@@ -48,10 +46,7 @@ th, td {
 			Propios
 			{%endif%}
 		</td>
-		<td>{{programa.beneficiarios}}</td>
-		<td>{{programa.oficio_de_autorizacion}}</td>
 		<td>{{programa.año}}</td>
-		<td>{{programa.fecha_creado|date:"d/m/Y"}}</td>
 		<td>{%if programa.MontoAnualAutorizado is None%}
 				{%if programa.monto_anual_autorizado is None%}
 				Por definir
@@ -80,8 +75,6 @@ th, td {
 				 ${{programa.monto_anual_modificado|intcomma}}
 				{%endif%}
 			{%endif%}</td>
-
-
 		<td>{%if programa.MontoAnualEjercido is None%}
 				{%if programa.monto_anual_ejercido is None%}
 				Por definir
@@ -100,9 +93,12 @@ th, td {
 		<td><a href="{%url 'controlPresupuestal:UpdateViewPrograma' programa.pk%}">Editar Información</a></td>
 		<td><a href="{%url 'controlPresupuestal:DeleteViewPrograma' programa.pk%}">Eliminar</a></td>
 	</tr>
+
 {%empty%}
+
 	<tr>
 		<td colspan="12"><p align="center">Lista de programas vacia</p></td>
 	</tr>
 </table>
+
 {%endfor%}

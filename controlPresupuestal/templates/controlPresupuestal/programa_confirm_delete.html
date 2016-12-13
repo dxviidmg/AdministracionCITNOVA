@@ -1,7 +1,7 @@
-<h3>¿Estas seguro que deseas borrar el programa {{object}}?</h3>
+<p>¿Estas seguro de querer borrar el programa <em>{{object}}</em>?</p>
 <form method="post">
 	{%csrf_token%}
-	<input class="" type="submit" value="Si, Seguro">
+	<input class="" type="submit" value="Si">
 	
 	<a href="{%url 'controlPresupuestal:ListViewProgramas'%}"><input class="" type="button" value="Cancelar"></a>
 </form>

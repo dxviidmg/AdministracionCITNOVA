@@ -1,6 +1,6 @@
-<h3>¿Esta seguro en eliminar el capítulo {{capitulo.nombre}} ?</h3>
+<p>¿Estas seguro de querer borrar el capítulo <em>{{capitulo.codigo}} {{capitulo.nombre}}</em>?</p>
 <form action="." method="post">
 	{%csrf_token%}
-	<input type="submit" value="Eliminar">
+	<input type="submit" value="Si">
 	<a href="{%url 'controlPresupuestal:ListViewCapitulos' programa.pk%}"><input class="" type="button" value="Cancelar"></a>
 </form>

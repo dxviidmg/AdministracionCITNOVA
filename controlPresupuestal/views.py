@@ -23,9 +23,34 @@ class ListViewCapitulos(View):
 		template_name = "controlPresupuestal/listCapitulos.html"
 		programa = get_object_or_404(Programa, pk=pk)
 		capitulos = Capitulo.objects.filter(programa=programa).order_by('codigo')
+
+		total_monto_anual_autorizado_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_anual_autorizado'))
+		total_monto_anual_autorizado = total_monto_anual_autorizado_dict['monto_anual_autorizado__sum']
+
+		total_monto_anual_ampliacion_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_anual_ampliacion'))
+		total_monto_anual_ampliacion = total_monto_anual_ampliacion_dict['monto_anual_ampliacion__sum']		
+
+		total_monto_anual_reduccion_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_anual_reduccion'))
+		total_monto_anual_reduccion = total_monto_anual_reduccion_dict['monto_anual_reduccion__sum']
+
+		total_monto_anual_modificado_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_anual_modificado'))
+		total_monto_anual_modificado = total_monto_anual_modificado_dict['monto_anual_modificado__sum']
+
+		total_monto_anual_ejercido_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_anual_ejercido'))
+		total_monto_anual_ejercido = total_monto_anual_ejercido_dict['monto_anual_ejercido__sum']
+
+		total_monto_anual_por_ejercer_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_anual_por_ejercer'))
+		total_monto_anual_por_ejercer = total_monto_anual_por_ejercer_dict['monto_anual_por_ejercer__sum']
+
 		context = {
 		'programa': programa,
 		'capitulos': capitulos,
+		'total_monto_anual_autorizado': total_monto_anual_autorizado,
+		'total_monto_anual_ampliacion': total_monto_anual_ampliacion,
+		'total_monto_anual_reduccion': total_monto_anual_reduccion,
+		'total_monto_anual_modificado': total_monto_anual_modificado,
+		'total_monto_anual_ejercido': total_monto_anual_ejercido,
+		'total_monto_anual_por_ejercer': total_monto_anual_por_ejercer,
 		}
 		return render(request, template_name, context)
 
@@ -73,6 +98,7 @@ class ListViewMeses(View):
 		partida = get_object_or_404(Partida, pk=pk)
 		meses = Mes.objects.filter(partida=partida).order_by('mes')
 		capitulo = Capitulo.objects.get(partida=partida)
+		programa = Programa.objects.get(capitulo=capitulo)
 		
 		total_monto_autorizado_dict = Mes.objects.filter(partida=partida).aggregate(Sum('monto_autorizado'))
 		total_monto_autorizado = total_monto_autorizado_dict['monto_autorizado__sum']
@@ -96,6 +122,7 @@ class ListViewMeses(View):
 		'partida': partida,
 		'meses': meses,
 		'capitulo': capitulo,
+		'programa': programa,
 		'total_monto_autorizado': total_monto_autorizado,
 		'total_monto_ampliacion': total_monto_ampliacion,
 		'total_monto_reduccion': total_monto_reduccion,
@@ -369,6 +396,7 @@ class UpdateViewMesEjercido(View):
 				messages.error(request, "Error, el monto a ejercer es mayor que la cantidad dispoble por ejercer")
 				context = {
 					'mes': mes,
+					'partida': partida,
 					'NuevaModificacionForm': NuevaModificacionForm
 				}
 				return render(request,template_name,context)

@@ -1,8 +1,7 @@
-<h3>Edita {{partida.descripcion}}</h3>
+<p>Edita la partida <em>{{partida.descripcion}}</em></p>
 <form action="." method="post">
 	{%csrf_token%}
 	{{EdicionPartidaForm.as_p}}
-		<input type="submit" value="Guardar">
-		
-		<a href="{%url 'controlPresupuestal:ListViewPartidas' capitulo.pk%}"><input class="" type="button" value="Cancelar"></a>
+	<input type="submit" value="Guardar">
+	<a href="{%url 'controlPresupuestal:ListViewPartidas' capitulo.pk%}"><input class="" type="button" value="Cancelar"></a>
 </form>

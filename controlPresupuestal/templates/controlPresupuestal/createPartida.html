@@ -2,5 +2,5 @@
 	{%csrf_token%}
 	{{NuevaPartidaForm.as_p}}
 	<input type="submit" value="Crear">
-	<a href=""><input class="" type="button" value="Cancelar"></a>
+	<a href="{%url 'controlPresupuestal:ListViewPartidas' capitulo.pk%}"><input class="" type="button" value="Cancelar"></a>
 </form>

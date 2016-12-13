@@ -1,6 +1,6 @@
-<h3>¿Esta seguro en eliminar la partida {{partida.descripcion}} ?</h3>
+<p>¿Estas seguro de querer borrar la partida <em>{{partida.codigo}} {{partida.descripcion}}</em>?</p>
 <form action="." method="post">
 	{%csrf_token%}
-	<input type="submit" value="Eliminar">
+	<input type="submit" value="Si">
 	<a href="{%url 'controlPresupuestal:ListViewPartidas' capitulo.pk%}"><input class="" type="button" value="Cancelar"></a>
 </form>
