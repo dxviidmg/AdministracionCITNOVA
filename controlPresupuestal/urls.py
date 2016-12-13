@@ -6,6 +6,9 @@ urlpatterns = [
 #	
 
 	
+	url(r'^programas/capitulos/partidas/meses/actualizar/ampliacion/(?P<pk>\d+)/$', views.UpdateViewMesAmpliacion.as_view(), name="UpdateViewMesAmpliacion"),
+	url(r'^programas/capitulos/partidas/meses/actualizar/reduccion/(?P<pk>\d+)/$', views.UpdateViewMesReduccion.as_view(), name="UpdateViewMesReduccion"),
+	url(r'^programas/capitulos/partidas/meses/actualizar/ejercido/(?P<pk>\d+)/$', views.UpdateViewMesEjercido.as_view(), name="UpdateViewMesEjercido"),
 
 	url(r'^programas/capitulos/partidas/meses/nuevo/(?P<pk>\d+)/$', views.CreateViewMes.as_view(), name="CreateViewMes"),
 	url(r'^programas/capitulos/partidas/meses/actualizar/(?P<pk>\d+)/$', views.UpdateViewMes.as_view(), name="UpdateViewMes"),

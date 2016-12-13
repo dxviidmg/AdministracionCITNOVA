@@ -2,16 +2,16 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
 from .models import *
 from django.db.models import Sum
-#from querysetjoin import QuerySetJoin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from .forms import *
+from django.contrib import messages
+from decimal import Decimal
 from django.contrib import messages
 
 class ListViewProgramas(View):
 	def get(self, request):
 		template_name = "controlPresupuestal/listProgramas.html"
-
 		programas = Programa.objects.all().order_by('nombre')
 		context = {
 		'programas': programas,
@@ -23,7 +23,6 @@ class ListViewCapitulos(View):
 		template_name = "controlPresupuestal/listCapitulos.html"
 		programa = get_object_or_404(Programa, pk=pk)
 		capitulos = Capitulo.objects.filter(programa=programa).order_by('codigo')
-
 		context = {
 		'programa': programa,
 		'capitulos': capitulos,
@@ -33,7 +32,6 @@ class ListViewCapitulos(View):
 class ListViewPartidas(View):
 	def get(self, request, pk):
 		template_name = "controlPresupuestal/listPartidas.html"
-
 		capitulo = get_object_or_404(Capitulo, pk=pk)
 		partidas = Partida.objects.filter(capitulo=capitulo).order_by('codigo')
 		programa = Programa.objects.get(capitulo=capitulo)
@@ -72,7 +70,6 @@ class ListViewPartidas(View):
 class ListViewMeses(View):
 	def get(self, request, pk):
 		template_name = "controlPresupuestal/listMeses.html"
-
 		partida = get_object_or_404(Partida, pk=pk)
 		meses = Mes.objects.filter(partida=partida).order_by('mes')
 		capitulo = Capitulo.objects.get(partida=partida)
@@ -130,7 +127,6 @@ class CreateViewCapitulo(View):
 		template_name = "controlPresupuestal/createCapitulo.html"
 		programa = get_object_or_404(Programa, pk=pk)
 		NuevoCapituloForm=CapituloCreateForm()
-
 		context = {
 		'programa': programa,
 		'NuevoCapituloForm': NuevoCapituloForm,
@@ -139,14 +135,11 @@ class CreateViewCapitulo(View):
 	def post(self, request, pk):
 		template_name = "controlPresupuestal/createCapitulo.html"
 		programa = get_object_or_404(Programa, pk=pk)
-		
 		NuevoCapituloForm=CapituloCreateForm(request.POST)
-
 		if NuevoCapituloForm.is_valid:
 			NuevoCapitulo = NuevoCapituloForm.save(commit=False)
 			NuevoCapitulo.programa = programa
 			NuevoCapitulo.save()
-
 		return redirect("controlPresupuestal:ListViewCapitulos", pk=programa.pk)
 
 class UpdateViewCapitulo(View):
@@ -155,7 +148,6 @@ class UpdateViewCapitulo(View):
 		capitulo = get_object_or_404(Capitulo, pk=pk)
 		programa = Programa.objects.get(capitulo=capitulo)
 		EdicionCapituloForm=CapituloCreateForm(instance=capitulo)
-
 		context = {
 		'programa': programa,
 		'EdicionCapituloForm': EdicionCapituloForm,
@@ -166,7 +158,6 @@ class UpdateViewCapitulo(View):
 		capitulo = get_object_or_404(Capitulo, pk=pk)
 		programa = Programa.objects.get(capitulo=capitulo)
 		EdicionCapituloForm=CapituloCreateForm(instance=capitulo, data=request.POST)
-
 		if EdicionCapituloForm.is_valid:
 			EdicionCapituloForm.save()
 		return redirect("controlPresupuestal:ListViewCapitulos", pk=programa.pk)
@@ -176,7 +167,6 @@ class DeleteViewCapitulo(View):
 		template_name = "controlPresupuestal/deleteCapitulo.html"
 		capitulo = get_object_or_404(Capitulo, pk=pk)
 		programa = Programa.objects.get(capitulo=capitulo)
-
 		context = {
 		'capitulo': capitulo,
 		'programa': programa,
@@ -195,7 +185,6 @@ class CreateViewPartida(View):
 		template_name = "controlPresupuestal/createPartida.html"
 		capitulo = get_object_or_404(Capitulo, pk=pk)
 		NuevaPartidaForm=PartidaCreateForm()
-
 		context = {
 		'capitulo': capitulo,
 		'NuevaPartidaForm': NuevaPartidaForm,
@@ -204,9 +193,7 @@ class CreateViewPartida(View):
 	def post(self, request, pk):
 		template_name = "controlPresupuestal/createPartida.html"
 		capitulo = get_object_or_404(Capitulo, pk=pk)
-		
 		NuevaPartidaForm=PartidaCreateForm(request.POST)
-
 		if NuevaPartidaForm.is_valid:
 			NuevaPartida = NuevaPartidaForm.save(commit=False)
 			NuevaPartida.capitulo = capitulo
@@ -218,7 +205,6 @@ class UpdateViewPartida(View):
 		template_name = "controlPresupuestal/updatePartida.html"
 		partida = get_object_or_404(Partida, pk=pk)
 		capitulo = Capitulo.objects.get(partida=partida)
-
 		EdicionPartidaForm = PartidaCreateForm(instance=partida)
 		context = {
 			'partida': partida,
@@ -231,7 +217,6 @@ class UpdateViewPartida(View):
 		partida = get_object_or_404(Partida, pk=pk)
 		capitulo = Capitulo.objects.get(partida=partida)
 		EdicionPartidaForm = PartidaCreateForm(instance=partida, data=request.POST)
-
 		if EdicionPartidaForm.is_valid:
 			EdicionPartidaForm.save()
 		return redirect("controlPresupuestal:ListViewPartidas", pk=capitulo.pk)
@@ -258,9 +243,7 @@ class CreateViewMes(View):
 	def get(self, request, pk):
 		template_name = "controlPresupuestal/createMes.html"
 		partida = get_object_or_404(Partida, pk=pk)
-
 		NuevoMesForm=MesCreateForm()
-		
 		context = {
 		'partida': partida,
 		'NuevoMesForm': NuevoMesForm,
@@ -268,22 +251,17 @@ class CreateViewMes(View):
 		return render(request, template_name, context)
 	def post(self,request, pk):
 		template_name = "controlPresupuestal/createMes.html"		
-
 		partida = get_object_or_404(Partida, pk=pk)
-
 		NuevoMesForm = MesCreateForm(request.POST)
-
 		if NuevoMesForm.is_valid:
 			NuevoMes = NuevoMesForm.save(commit=False)
 			NuevoMes.partida = partida
 			NuevoMes.save()
 		return redirect("controlPresupuestal:ListViewMeses", pk=partida.pk)
 
-
 class UpdateViewMes(View):
 	def get(self, request, pk):
 		template_name = "controlPresupuestal/updateMes.html"
-
 		mes = get_object_or_404(Mes, pk=pk)
 		partida = Partida.objects.get(mes=mes)
 		EdicionMesForm = MesEditForm(instance=mes)
@@ -295,15 +273,13 @@ class UpdateViewMes(View):
 		return render(request, template_name, context)
 	def post(self,request, pk):
 		template_name = "controlPresupuestal/updateMes.html"
-
 		mes = get_object_or_404(Mes, pk=pk)
 		partida = Partida.objects.get(mes=mes)
-		EdicionMesForm = MesEditForm(instance=mes,data=request.POST)
+		
+		EdicionMesForm = MesEditForm(instance=mes, data=request.POST)
 
-		if EdicionMesForm.is_valid:
+		if EdicionMesForm.is_valid():
 			EdicionMesForm.save()
-
-
 		return redirect("controlPresupuestal:ListViewMeses", pk=partida.pk)
 
 class DeleteViewMes(View):
@@ -322,4 +298,81 @@ class DeleteViewMes(View):
 		partida = Partida.objects.get(mes=mes)
 		if request.method=='POST':
 			mes.delete()
+		return redirect("controlPresupuestal:ListViewMeses", pk=partida.pk)
+
+class UpdateViewMesAmpliacion(View):
+	def get(self, request, pk):
+		template_name = "controlPresupuestal/updateMesAmpliacion.html"
+		mes = get_object_or_404(Mes, pk=pk)
+		partida = Partida.objects.get(mes=mes)
+		NuevaModificacionForm = ModificacionForm()
+		context = {
+		'mes': mes,
+		'partida': partida,
+		'NuevaModificacionForm': NuevaModificacionForm
+		}
+		return render(request, template_name, context)	
+	def post(self,request, pk):
+		template_name = "controlPresupuestal/updateMesAmpliacion.html"
+		mes = get_object_or_404(Mes, pk=pk)
+		partida = Partida.objects.get(mes=mes)
+		NuevaModificacionForm = ModificacionForm(request.POST)
+		if NuevaModificacionForm.is_valid():
+			ampliacion = NuevaModificacionForm.cleaned_data['cantidad']
+			mes.monto_ampliacion = ampliacion + mes.monto_ampliacion
+			mes.save()
+		return redirect("controlPresupuestal:ListViewMeses", pk=partida.pk)
+
+class UpdateViewMesReduccion(View):
+	def get(self, request, pk):
+		template_name = "controlPresupuestal/updateMesReduccion.html"
+		mes = get_object_or_404(Mes, pk=pk)
+		partida = Partida.objects.get(mes=mes)
+		NuevaModificacionForm = ModificacionForm()
+		context = {
+		'mes': mes,
+		'partida': partida,
+		'NuevaModificacionForm': NuevaModificacionForm
+		}
+		return render(request, template_name, context)	
+	def post(self,request, pk):
+		template_name = "controlPresupuestal/updateMesReduccion.html"
+		mes = get_object_or_404(Mes, pk=pk)
+		partida = Partida.objects.get(mes=mes)
+		NuevaModificacionForm = ModificacionForm(request.POST)
+		if NuevaModificacionForm.is_valid():
+			reduccion = NuevaModificacionForm.cleaned_data['cantidad']
+			mes.monto_reduccion = reduccion + mes.monto_reduccion
+			mes.save()
+		return redirect("controlPresupuestal:ListViewMeses", pk=partida.pk)
+
+class UpdateViewMesEjercido(View):
+	def get(self, request, pk):
+		template_name = "controlPresupuestal/updateMesEjercido.html"
+		mes = get_object_or_404(Mes, pk=pk)
+		partida = Partida.objects.get(mes=mes)
+		NuevaModificacionForm = ModificacionForm()
+		context = {
+		'mes': mes,
+		'partida': partida,
+		'NuevaModificacionForm': NuevaModificacionForm
+		}
+		return render(request, template_name, context)	
+	def post(self,request, pk):
+		template_name = "controlPresupuestal/updateMesEjercido.html"
+		mes = get_object_or_404(Mes, pk=pk)
+		partida = Partida.objects.get(mes=mes)
+		NuevaModificacionForm = ModificacionForm(request.POST)
+		if NuevaModificacionForm.is_valid():
+			ejercido = NuevaModificacionForm.cleaned_data['cantidad']
+			if ejercido > mes.monto_por_ejercer:
+				messages.error(request, "Error, el monto a ejercer es mayor que la cantidad dispoble por ejercer")
+				context = {
+					'mes': mes,
+					'NuevaModificacionForm': NuevaModificacionForm
+				}
+				return render(request,template_name,context)
+			else:
+				mes.monto_ejercido = ejercido + mes.monto_ejercido
+				mes.save()
 		return redirect("controlPresupuestal:ListViewMeses", pk=partida.pk)

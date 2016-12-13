@@ -65,6 +65,9 @@ th, td {
 		<td>$ {%if mes.MontoPorEjercer is NONE%}{{mes.monto_por_ejercer|intcomma}}{%endif%}</td>
 		<td><a href="{%url 'controlPresupuestal:UpdateViewMes' mes.pk%}">Editar</a></td>
 		<td><a href="{%url 'controlPresupuestal:DeleteViewMes' mes.pk%}">Eliminar</a></td>
+		<td><a href="{%url 'controlPresupuestal:UpdateViewMesAmpliacion' mes.pk%}">Ampliar</a></td>
+		<td><a href="{%url 'controlPresupuestal:UpdateViewMesReduccion' mes.pk%}">Reducir</a></td>
+		<td><a href="{%url 'controlPresupuestal:UpdateViewMesEjercido' mes.pk%}">Ejercer</a></td>
 	</tr>
 {%empty%}
 	<tr>

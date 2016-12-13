@@ -1,0 +1,9 @@
+Ampliación
+{{mes.monto_ampliacion}}
+
+<form action="." method="post">
+	{%csrf_token%}
+	{{NuevaModificacionForm.as_p}}
+		<input type="submit" value="Guardar">
+		
+</form>

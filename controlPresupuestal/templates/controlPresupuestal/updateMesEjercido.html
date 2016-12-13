@@ -1,0 +1,26 @@
+ejercer
+Ejercido: {{mes.monto_ejercido}}
+Por ejercer: {{mes.monto_por_ejercer}}
+
+<style type="text/css">
+	.error{
+		background-color: red;
+	}
+</style>
+
+<div>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+</div>
+
+<form action="." method="post">
+	{%csrf_token%}
+	{{NuevaModificacionForm.as_p}}
+		<input type="submit" value="Guardar">
+		
+</form>
