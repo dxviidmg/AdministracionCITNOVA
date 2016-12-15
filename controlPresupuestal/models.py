@@ -26,6 +26,11 @@ class Programa(models.Model):
 	monto_anual_modificado = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
 	monto_anual_ejercido = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
 	monto_anual_por_ejercer = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	pp = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+
+	def SacaPorcentaje(self):  
+		self.pp = (self.monto_anual_ejercido*100)/self.monto_anual_autorizado
+		self.save()
 
 	def MontoAnualAutorizado(self):
 		programa = Programa.objects.get(pk=self.pk)
