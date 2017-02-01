@@ -1,0 +1,7 @@
+{%for solicitud in solicitudes%}
+<p>{{solicitud.concepto}} Autor: {{solicitud.solicitante}}</p>
+{%empty%}
+<p>Vacio</p>
+{%endfor%}
+
+{{request.user.username}}

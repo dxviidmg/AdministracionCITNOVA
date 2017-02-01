@@ -1,0 +1,12 @@
+<p>Registro de nuevo SRF Propia</p>
+<form action="." method="post">
+		{%csrf_token%}
+		{{SolicitudRecursoFinancieroForn.as_p}}
+		<input type="submit" value="Crear Usuario">
+</form>
+
+{{solicitudes}}
+{{user.get_full_name}}
+{{perfil.cta_bancaria}}
+{{departamento.codigo}}
+

@@ -1,0 +1,7 @@
+<p>Registro de nuevo trabajador</p>
+<form action="." method="post">
+		{%csrf_token%}
+		{{UserForm.as_p}}
+		{{PerfilEmpleadoForm.as_p}}
+		<input type="submit" value="Crear Usuario">
+</form>
