@@ -39,7 +39,7 @@ class CreateViewEmpleado(View):
 		
 		if NuevoUserForm.is_valid(): 
 			NuevoUser = NuevoUserForm.save(commit=False)
-			NuevoUser.username = 'EMP' + str(NuevoUser.first_name[0].upper()) + str(NuevoUser.last_name[1].upper()) + str(userActual)
+			NuevoUser.username = 'EMPL' + str(NuevoUser.first_name[0].upper()) + str(NuevoUser.last_name[0].upper()) + str(userActual)
 			NuevoUser.save()
 
 		if NuevoPerfilForm.is_valid():
@@ -72,7 +72,7 @@ class CreateViewProveedor(View):
 		
 		if NuevoUserForm.is_valid(): 
 			NuevoUser = NuevoUserForm.save(commit=False)
-			NuevoUser.username = 'PROV' + str(NuevoUser.first_name[0].upper()) + str(NuevoUser.last_name[1].upper()) + str(userActual)
+			NuevoUser.username = 'PROV' + str(NuevoUser.first_name[0].upper()) + str(NuevoUser.last_name[0].upper()) + str(userActual)
 			NuevoUser.save()
 
 		if NuevoPerfilForm.is_valid():

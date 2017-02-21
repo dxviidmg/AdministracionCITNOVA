@@ -68,8 +68,29 @@ class CreateViewSolicitudEmpleado(View):
 		perfil = Perfil.objects.get(user=request.user)
 		departamento = Departamento.objects.get(perfil=perfil)
 		users = User.objects.all().exclude(pk=request.user.pk)
+		ListaUsers = []
 
-		SolicitudRecursoFinancieroForn = SolicitudRecursoFinancieroEmpleadoCreateForm(departamento=departamento)
+		#perfiles = Perfil.objects.all().exclude(user=request.user)
+		#for perfilE in perfiles:
+		perfiles = Perfil.objects.filter(departamento=departamento).count()
+		print(perfiles)
+		#for user in users:
+		#	perfilE = Perfil.objects.get(user=user)
+		#	departamentoE = Departamento.objects.get(perfil=perfilE)
+			#print(perfilE)
+		#	print(departamentoE)
+
+
+		#for empleado in empleados:
+			#perfilEmpleado = Perfil.objects.get(user=empleado)
+			#departamentoEmpleado = Departamento.objects.get(perfil=perfilEmpleado)
+			#departamentoEmpleado = Departamento.objects.get(perfil=perfil)
+			#if departamento == departamentoEmpleado:
+			#if perfil == perfilEmpleado:
+		#	ListaEmpleados.append({'user': user.username, 'perfil': Perfil.objects.get(user=user)})
+
+		#print(ListaEmpleados)
+		SolicitudRecursoFinancieroForn = SolicitudRecursoFinancieroEmpleadoCreateForm()
 		context = {
 			'solicitudes': solicitudes,
 			'SolicitudRecursoFinancieroForn': SolicitudRecursoFinancieroForn,
@@ -80,7 +101,7 @@ class CreateViewSolicitudEmpleado(View):
 		}
 		return render(request,template_name,context)
 	def post(self,request):
-		template_name = "recursosFinancieros/createSolicitudEmpleado.html"
+		template_name = "recursosFinancieros/createSolicitudPropia.html"
 
 		solicitudActual = SolicitudRecursoFinanciero.objects.filter(solicitante=request.user).count() + 1
 

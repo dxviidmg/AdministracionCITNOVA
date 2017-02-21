@@ -5,12 +5,12 @@ from .models import *
 class UserCreateForm(forms.ModelForm):
 	class Meta:
 		model = User
-		fields = ('first_name', 'last_name', 'email',)
+		fields = ('first_name', 'last_name', 'email', 'departamento')
 
 class PerfilEmpleadoCreateForm(forms.ModelForm):
 	class Meta:
 		model = Perfil
-		fields = ('departamento', 'grado_profesional', 'puesto', 'telefono', 'banco', 'cta_bancaria')
+		fields = ('grado_profesional', 'puesto', 'telefono', 'banco', 'cuenta_bancaria', 'CLABE')
 
 #	def __init__(self, *args, **kwargs):
 #		super(PerfilEmpleadoCreateForm, self).__init__(*args, **kwargs)
@@ -19,4 +19,4 @@ class PerfilEmpleadoCreateForm(forms.ModelForm):
 class PerfilProveedorCreateForm(forms.ModelForm):
 	class Meta:
 		model = Perfil
-		fields = ('grado_profesional', 'telefono', 'banco', 'cta_bancaria')
+		fields = ('grado_profesional', 'telefono', 'banco', 'cuenta_bancaria', 'CLABE')
